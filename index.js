@@ -16,7 +16,7 @@ if (!databaseUri) {
 var allowInsecureHTTP = true;
 var dashboard = new ParseDashboard({
   "apps": [{
-    "serverURL": "https://reply-server.herokuapp.com/parse",
+    "serverURL": "https://reply-server.herokuapp.com/dash",
     "appId": "myAppId",
     "masterKey": "myMasterKey",
     "appName": "reply-server"
