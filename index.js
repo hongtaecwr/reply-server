@@ -1,22 +1,37 @@
 // Example express application adding the parse-server module to expose Parse
 // compatible API routes.
 
+
+
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
+var ParseDashboard = require('parse-dashboard');
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
-
+var allowInsecureHTTP = true;
+var dashboard = new ParseDashboard({
+  "apps": [{
+    "serverURL": "https://reply-server.herokuapp.com/parse",
+    "appId": "myAppId",
+    "masterKey": "myMasterKey",
+    "appName": "reply-msg-parse-server"
+  }],
+  "users": [{
+    "user": "admin",
+    "pass": "pass"
+  }]
+}, allowInsecureHTTP);
 var api = new ParseServer({
-  databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
+  databaseURI: databaseUri || 'mongodb://heroku_tzm3h5tc:glt6er5p98ht5hs4m34b4ou3pq@ds255253.mlab.com:55253/heroku_tzm3h5tc',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!
-  serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',  // Don't forget to change to https if needed
+  serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse', // Don't forget to change to https if needed
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
@@ -29,6 +44,7 @@ var app = express();
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
+app.use('/dashboard', dashboard);
 
 // Serve the Parse API on the /parse URL prefix
 var mountPath = process.env.PARSE_MOUNT || '/parse';
@@ -48,7 +64,7 @@ app.get('/test', function(req, res) {
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, function() {
-    console.log('parse-server-example running on port ' + port + '.');
+  console.log('parse-server-example running on port ' + port + '.');
 });
 
 // This will enable the Live Query real-time server
