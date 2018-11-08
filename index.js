@@ -4,6 +4,8 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
+var ParseDashboard = require('parse-dashboard');
+
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
