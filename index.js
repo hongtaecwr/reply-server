@@ -13,7 +13,7 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
-var allowInsecureHTTP = true;
+var options = { allowInsecureHTTP: false };
 var dashboard = new ParseDashboard({
   "apps": [{
     "serverURL": "https://reply-server.herokuapp.com/parse",
@@ -25,13 +25,13 @@ var dashboard = new ParseDashboard({
     "user": "hongtaedb",
     "pass": "hongtae123"
   }]
-}, allowInsecureHTTP);
+}, options);
 var api = new ParseServer({
   databaseURI: databaseUri || 'mongodb://heroku_4wng3wx7:r22m8tbotpha1snrfcmurm3cp9@ds263639.mlab.com:63639/heroku_4wng3wx7',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || 'myMasterKey', //Add your master key here. Keep it secret!
-  serverURL: process.env.SERVER_URL || 'http://reply-server.herokuapp.com/parse', // Don't forget to change to https if needed
+  serverURL: process.env.SERVER_URL || 'https://reply-server.herokuapp.com/parse', // Don't forget to change to https if needed
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
