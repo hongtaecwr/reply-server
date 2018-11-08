@@ -1,26 +1,33 @@
-FROM node:latest
+#
+# --- Base Node Image ---
+FROM node:8-alpine AS base
 
-RUN mkdir parse
+WORKDIR /src
 
-ADD . /parse
-WORKDIR /parse
+# Copy package.json first to benefit from layer caching
+COPY package*.json ./
+RUN npm install --only=production
+# Copy production node_modules aside for later
+RUN cp -R node_modules prod_node_modules
+# Install remaining dev dependencies
 RUN npm install
 
-ENV APP_ID setYourAppId
-ENV MASTER_KEY setYourMasterKey
-ENV DATABASE_URI setMongoDBURI
+COPY . /src
 
-# Optional (default : 'parse/cloud/main.js')
-# ENV CLOUD_CODE_MAIN cloudCodePath
+# Run all webpack build steps
+RUN npm run prepublish && npm run build
 
-# Optional (default : '/parse')
-# ENV PARSE_MOUNT mountPath
 
-EXPOSE 1337
+#
+# --- Production Image ---
+FROM node:8-alpine AS release
+WORKDIR /src
 
-# Uncomment if you want to access cloud code outside of your container
-# A main.js file must be present, if not Parse will not start
+# Copy production node_modules
+COPY --from=base /src/prod_node_modules /src/node_modules
+COPY --from=base /src/package*.json /src/
 
-# VOLUME /parse/cloud               
+# Copy compiled src dirs
+COPY --from=base /src/Parse-Dashboard/ /src/Parse-Dashboard/
 
-CMD [ "npm", "start" ]
+ENTRYPOINT ["node", "Parse-Dashboard/index.js"]
