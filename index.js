@@ -13,7 +13,8 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
-var allowInsecureHTTP = true;
+//var allowInsecureHTTP = true;
+var trustProxy = true;
 var dashboard = new ParseDashboard({
   "apps": [{
     "serverURL": "https://reply-server.herokuapp.com/parse",
@@ -24,8 +25,9 @@ var dashboard = new ParseDashboard({
   "users": [{
     "user": "hongtaedb",
     "pass": "hongtae123"
-  }]
-}, allowInsecureHTTP);
+  }],
+  "trustProxy": 1
+});
 var api = new ParseServer({
   databaseURI: databaseUri || 'mongodb://heroku_4wng3wx7:r22m8tbotpha1snrfcmurm3cp9@ds263639.mlab.com:63639/heroku_4wng3wx7',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
