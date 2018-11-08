@@ -25,7 +25,7 @@ var dashboard = new ParseDashboard({
   }]
 }, allowInsecureHTTP);
 var api = new ParseServer({
-  databaseURI: databaseUri || 'mongodb://heroku_tzm3h5tc:glt6er5p98ht5hs4m34b4ou3pq@ds255253.mlab.com:55253/heroku_tzm3h5tc',
+  databaseURI: databaseUri || 'mongodb://heroku_9tzbzfg7:j2fs0ketnt7jpqimv261em1gks@ds155293.mlab.com:55293/heroku_9tzbzfg7',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'SH7e5mAa73Sfs4to6EVn',
   masterKey: process.env.MASTER_KEY || '53TNWQ6xVpMqFIV8fqk1', //Add your master key here. Keep it secret!
