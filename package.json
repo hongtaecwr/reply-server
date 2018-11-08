@@ -9,8 +9,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "express": "~4.11.x",
+    "express": "^4.16.4",
     "kerberos": "~0.0.x",
+    "mongodb": "^3.1.9",
     "parse": "~1.8.0",
     "parse-dashboard": "^1.2.0",
     "parse-server": "*"
