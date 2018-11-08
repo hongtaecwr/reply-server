@@ -17,8 +17,8 @@ var allowInsecureHTTP = true;
 var dashboard = new ParseDashboard({
   "apps": [{
     "serverURL": "https://reply-server.herokuapp.com/parse",
-    "appId": "WiGnYW7WsWcYqYwDQh7R",
-    "masterKey": "BtDqejjk3ABobcWW41ls",
+    "appId": "myAppId",
+    "masterKey": "myMasterKey",
     "appName": "reply-server"
   }],
   "users": [{
@@ -26,13 +26,12 @@ var dashboard = new ParseDashboard({
     "pass": "pass"
   }]
 }, allowInsecureHTTP);
-
 var api = new ParseServer({
   databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.APP_ID || 'appId',
-  masterKey: process.env.MASTER_KEY || 'BtDqejjk3ABobcWW41ls', //Add your master key here. Keep it secret!
-  serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',  // Don't forget to change to https if needed
+  appId: process.env.APP_ID || 'myAppId',
+  masterKey: process.env.MASTER_KEY || 'myMasterKey', //Add your master key here. Keep it secret!
+  serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse', // Don't forget to change to https if needed
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
