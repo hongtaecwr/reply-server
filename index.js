@@ -7,7 +7,7 @@ var path = require('path');
 var ParseDashboard = require('parse-dashboard');
 
 
-var databaseUri = 'mongodb://heroku_4wng3wx7:r22m8tbotpha1snrfcmurm3cp9@ds263639.mlab.com:63639/heroku_4wng3wx7';
+var databaseUri = 'mongodb://heroku_w88vtq1s:njutckonn64fdp2h1nuuvop7cp@ds131258.mlab.com:31258/heroku_w88vtq1s';
 
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
@@ -29,7 +29,7 @@ var dashboard = new ParseDashboard({
   "trustProxy": 1
 });
 var api = new ParseServer({
-  databaseURI: databaseUri || 'mongodb://heroku_4wng3wx7:r22m8tbotpha1snrfcmurm3cp9@ds263639.mlab.com:63639/heroku_4wng3wx7',
+  databaseURI: databaseUri || 'mongodb://heroku_w88vtq1s:njutckonn64fdp2h1nuuvop7cp@ds131258.mlab.com:31258/heroku_w88vtq1s',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || 'myMasterKey', //Add your master key here. Keep it secret!
