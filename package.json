@@ -12,7 +12,7 @@
     "express": "^4.16.4",
     "kerberos": "~0.0.x",
     "mongodb": "^3.1.9",
-    "parse": "~1.8.0",
+    "parse": "^1.8.5",
     "parse-dashboard": "^1.2.0",
     "parse-server": "*",
     "string-similarity": "^2.0.0",
