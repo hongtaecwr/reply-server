@@ -16,7 +16,7 @@ Parse.Cloud.define('testMsg', function(req, res) {
   //console.log("msg from user:" + msgFromUser);
   res.success({
     "msg": msgFromUser,
-    "replyMsg": "FUCK"
+    "replyMsg": "Bad"
   });
 });
 

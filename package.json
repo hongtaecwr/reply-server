@@ -14,7 +14,9 @@
     "mongodb": "^3.1.9",
     "parse": "~1.8.0",
     "parse-dashboard": "^1.2.0",
-    "parse-server": "*"
+    "parse-server": "*",
+    "string-similarity": "^2.0.0",
+    "wordcut": "^0.8.2"
   },
   "scripts": {
     "start": "node index.js"
