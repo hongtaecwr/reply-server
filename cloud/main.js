@@ -10,6 +10,15 @@ Parse.Cloud.define('hello', function(req, res) {
   return 'Hongtae';
 });
 
+Parse.Cloud.define('testMsg', function(req, res) {
+  var msgFromUser = req.params.msg;
+  //console.log("msg from user:" + msgFromUser);
+  res.success({
+    "msg": msgFromUser,
+    "replyMsg": "FUCK"
+  });
+});
+
 Parse.Cloud.define('botTraining', function(request, response) {
   var MSG = Parse.Object.extend("Message");
   var msgFromUser = request.params.msg;
