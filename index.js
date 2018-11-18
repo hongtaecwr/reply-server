@@ -28,6 +28,7 @@ var dashboard = new ParseDashboard({
   }],
   "trustProxy": 1
 });
+
 var api = new ParseServer({
   databaseURI: databaseUri || 'mongodb://heroku_w88vtq1s:njutckonn64fdp2h1nuuvop7cp@ds131258.mlab.com:31258/heroku_w88vtq1s',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
