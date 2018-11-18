@@ -3,7 +3,7 @@ var appQueryLimitMin = 10000;
 var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
-var Parse = require('parse');
+
 wordcut.init();
 //Starter
 Parse.Cloud.define('hello', function(req, res) {
@@ -16,7 +16,7 @@ Parse.Cloud.define('testMsg', function(req, res) {
   //console.log("msg from user:" + msgFromUser);
   res.success({
     "msg": msgFromUser,
-    "replyMsg": "Bad"
+    "replyMsg": "FUCK"
   });
 });
 
