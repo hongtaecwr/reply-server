@@ -16,7 +16,7 @@ Parse.Cloud.define('testMsg', function(req, res) {
   //console.log("msg from user:" + msgFromUser);
   res.success({
     "msg": msgFromUser,
-    "replyMsg": "FUCK"
+    "replyMsg": "Good"
   });
 });
 
@@ -50,8 +50,8 @@ Parse.Cloud.define('botTraining', function(request, response) {
         if (msgResponse.length == 0) {
           // add new msg
           var msgOBJ = new MSG();
-          msgOBJ.set("msg", msgFromUser);
-          msgOBJ.set("replyMsg", replyMsgFromUser);
+          msgOBJ.set("เต้", msgFromUser);
+          msgOBJ.set("โอเค", replyMsgFromUser);
           var msgChar = msgFromUser.join('');
           var wc = wordcut.cut(msgChar)
           let arr = wc.split('|');
