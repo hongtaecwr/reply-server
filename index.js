@@ -24,7 +24,7 @@ var dashboard = new ParseDashboard({
   }],
   "users": [{
     "user": "hongtaedb",
-    "pass": "hongtae123"
+    "pass": "hongtaedb"
   }],
   "trustProxy": 1
 });
