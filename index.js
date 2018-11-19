@@ -7,7 +7,7 @@ var path = require('path');
 var ParseDashboard = require('parse-dashboard');
 
 
-var databaseUri = 'mongodb://heroku_w88vtq1s:njutckonn64fdp2h1nuuvop7cp@ds131258.mlab.com:31258/heroku_w88vtq1s';
+var databaseUri = 'mongodb://heroku_g9kgx0z1:c8uc9nc6v8cqmqtv5hscvhved@ds027761.mlab.com:27761/heroku_g9kgx0z1';
 
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
@@ -19,7 +19,6 @@ var dashboard = new ParseDashboard({
   "apps": [{
     "serverURL": "https://replyserver.herokuapp.com/parse",
     "appId": "myAppId",
-    "restKey": "myRestKey",
     "masterKey": "myMasterKey",
     "appName": "replyserver",
   }],
