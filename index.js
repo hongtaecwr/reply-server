@@ -17,11 +17,11 @@ if (!databaseUri) {
 var trustProxy = true;
 var dashboard = new ParseDashboard({
   "apps": [{
-    "serverURL": "https://reply-msg-server.herokuapp.com/parse/",
-    "appId": "myAppId",
-    "masterKey": "myMasterKey",
+    "serverURL": "https://reply-msg-server.back4app.com/parse/",
+    "appId": "Yd1Y1mmVSi0lvUHkqxgCWXRp3rKgcFL0CfRaqm9j",
+    "masterKey": "PZ7YYchzkikiyNrxusJNTQcDBr3Igkqs49jyKWDP",
     "appName": "reply-msg-server",
-    "restKey": "myRestKey"
+    "restKey": "SOBy9nZ0uRxlWXDKNZuSS4oti7IpQof1W5lBv1bV"
   }],
   "users": [{
     "user": "hongtaedb",
@@ -31,11 +31,11 @@ var dashboard = new ParseDashboard({
 });
 
 var api = new ParseServer({
-  databaseURI: databaseUri || 'mongodb://heroku_w88vtq1s:njutckonn64fdp2h1nuuvop7cp@ds131258.mlab.com:31258/heroku_w88vtq1s',
+  databaseURI: databaseUri || 'mongodb://admin:N3rUUA6FQ0RzZvKq4Vxl2Wie@mongodb.back4app.com:27017/69351ab05bfa4fe4a23e7e87a45574bd?ssl=true',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.APP_ID || 'myAppId',
-  masterKey: process.env.MASTER_KEY || 'myMasterKey', //Add your master key here. Keep it secret!
-  serverURL: process.env.SERVER_URL || 'https://reply-msg-server.herokuapp.com/parse', // Don't forget to change to https if needed
+  appId: process.env.APP_ID || 'Yd1Y1mmVSi0lvUHkqxgCWXRp3rKgcFL0CfRaqm9j',
+  masterKey: process.env.MASTER_KEY || 'PZ7YYchzkikiyNrxusJNTQcDBr3Igkqs49jyKWDP', //Add your master key here. Keep it secret!
+  serverURL: process.env.SERVER_URL || 'https://reply-msg-server.back4app.com/parse', // Don't forget to change to https if needed
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
