@@ -33,7 +33,7 @@ Parse.Cloud.define('getReplyMsg', function(request, response) {
 });
 
 
-Parse.Cloud.define('botTraining', function(request, response) {
+Parse.Cloud.define('botTrainings', function(request, response) {
   var MSG = Parse.Object.extend("Message");
   var msgFromUser = request.params.msg;
   var replyMsgFromUser = request.params.replyMsg;
@@ -50,8 +50,8 @@ Parse.Cloud.define('botTraining', function(request, response) {
         if (msgResponse.length == 0) {
           // add new msg
           var msgOBJ = new MSG();
-          msgOBJ.set("เต้", msgFromUser);
-          msgOBJ.set("โอเค", replyMsgFromUser);
+          msgOBJ.set("msg", msgFromUser);
+          msgOBJ.set("replyMsg", replyMsgFromUser);
           var msgChar = msgFromUser.join('');
           var wc = wordcut.cut(msgChar)
           let arr = wc.split('|');
