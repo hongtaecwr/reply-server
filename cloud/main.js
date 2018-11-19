@@ -7,8 +7,30 @@ var stringSimilarity = require('string-similarity');
 wordcut.init();
 
 Parse.Cloud.define('hello', function(req, res) {
-  return 'Hongtae';
+  res.success('Hi');
 });
+
+Parse.Cloud.define('testMsg', function(req, res) {
+  var msgFromUser = req.params.msg;
+  //console.log("msg from user:" + msgFromUser);
+  res.success({
+    "msg": msgFromUser,
+    "replyMsg": "FUCK"
+  });
+});
+
+Parse.Cloud.define('getReplyMsg', function(request, response) {
+  getReplyMsg(request, {
+    success: function(result) {
+      // Do stuff with users
+      response.success(result);
+    },
+    error: function(error) {
+      response.error(error);
+    }
+  });
+});
+
 
 Parse.Cloud.define('botTraining', function(request, response) {
   var MSG = Parse.Object.extend("Message");
