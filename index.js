@@ -21,6 +21,7 @@ var dashboard = new ParseDashboard({
     "appId": "myAppId",
     "masterKey": "myMasterKey",
     "appName": "replyserver",
+    "restKey": "myRestKey"
   }],
   "users": [{
     "user": "hongtaedb",
