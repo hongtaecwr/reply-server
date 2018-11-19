@@ -20,7 +20,8 @@ var dashboard = new ParseDashboard({
     "serverURL": "https://reply-msg-server.herokuapp.com/parse",
     "appId": "myAppId",
     "masterKey": "myMasterKey",
-    "appName": "reply-msg-server"
+    "appName": "reply-msg-server",
+    "restKey": "myRestKey"
   }],
   "users": [{
     "user": "hongtaedb",
