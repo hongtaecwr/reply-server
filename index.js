@@ -17,7 +17,7 @@ if (!databaseUri) {
 var trustProxy = true;
 var dashboard = new ParseDashboard({
   "apps": [{
-    "serverURL": "https://reply-msg-server.herokuapp.com/parse/",
+    "serverURL": "https://reply-msg-server.herokuapp.com/parse",
     "appId": "myAppId",
     "masterKey": "myMasterKey",
     "appName": "reply-msg-server",
