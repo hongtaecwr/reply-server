@@ -17,10 +17,10 @@ if (!databaseUri) {
 var trustProxy = true;
 var dashboard = new ParseDashboard({
   "apps": [{
-    "serverURL": "https://reply-msg-server.herokuapp.com/parse",
+    "serverURL": "https://replyserver.herokuapp.com/parse",
     "appId": "myAppId",
     "masterKey": "myMasterKey",
-    "appName": "reply-msg-server",
+    "appName": "replyserver",
   }],
   "users": [{
     "user": "hongtaedb",
@@ -30,11 +30,11 @@ var dashboard = new ParseDashboard({
 });
 
 var api = new ParseServer({
-  databaseURI: databaseUri || 'mongodb://heroku_w88vtq1s:njutckonn64fdp2h1nuuvop7cp@ds131258.mlab.com:31258/heroku_w88vtq1s',
+  databaseURI: databaseUri || 'mongodb://heroku_g9kgx0z1:c8uc9nc6v8cqmqtv5hscvhved@ds027761.mlab.com:27761/heroku_g9kgx0z1',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || 'myMasterKey', //Add your master key here. Keep it secret!
-  serverURL: process.env.SERVER_URL || 'https://reply-msg-server.herokuapp.com/parse', // Don't forget to change to https if needed
+  serverURL: process.env.SERVER_URL || 'https://replyserver.herokuapp.com/parse', // Don't forget to change to https if needed
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
