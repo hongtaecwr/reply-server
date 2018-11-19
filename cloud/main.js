@@ -4,7 +4,6 @@ var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
 var Parse = require('parse/node').Parse;
-var user = Parse.User.current();
 
 wordcut.init();
 
