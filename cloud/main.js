@@ -142,6 +142,8 @@ Parse.Cloud.define('createUnknowMsg', function(request, response) {
   } // end else
 });
 
+
+/////////////////FindMSG
 Parse.Cloud.define('findBestReplyMsg', function(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
@@ -179,7 +181,7 @@ Parse.Cloud.define('findBestReplyMsg', function(request, response) {
             //console.log("resultReplyMsg:" + "0");
           } else {
             var randomIndex = Math.floor((Math.random() * replyCount) + 0);
-            //console.log("randomIndex:" + randomIndex);
+            console.log("randomIndex:" + randomIndex);
             var resultReplyMsg = contents[randomIndex].toString();
             response.success({
               "msg": msgFromUser,
@@ -231,14 +233,16 @@ Parse.Cloud.define("createCharArray", function(request, response) {
     });
 });
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Parse.Cloud.define("findBestReplyMsgFromCharSet", function(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   var wc = wordcut.cut(msgFromUser)
   let arr = wc.split('|');
+ 
+ 
   //console.log("wordcut:" + wordcut.cut(msgFromUser));
-
   //console.log("request:" + request.params["msg"]);
   //console.log("msg from user:" + msgFromUser);
   //console.log("arr:" + JSON.stringify(arr));
@@ -298,7 +302,7 @@ Parse.Cloud.define("findBestReplyMsgFromCharSet", function(request, response) {
     });
   }
 });
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
@@ -363,7 +367,7 @@ Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
   }
 });
 
-
+//////////////////////////////////////////////////////////////////////
 Parse.Cloud.define("createMsgFromUnknow", function(request, response) {
   var MSG = Parse.Object.extend("Message");
   var UNMSG = Parse.Object.extend("UnknownMessage");
@@ -418,6 +422,7 @@ Parse.Cloud.define("createMsgFromUnknow", function(request, response) {
     });
 });
 
+////Very Good/////////////////////////////////////////////////////////////
 function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
@@ -469,7 +474,7 @@ function getReplyMsg(request, response) {
   }
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 function chain1(response){
   var MSG = Parse.Object.extend("Message");
   var UNMSG = Parse.Object.extend("UnknownMessage");
