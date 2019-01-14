@@ -1,6 +1,6 @@
 var appQueryLimit = 99999;
 var appQueryLimitMin = 10000;
-var wordcut = require("wordcut");
+var wordcut = require("thai-wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
 // var Parse = require('parse/node').Parse;

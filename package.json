@@ -16,6 +16,7 @@
     "parse-dashboard": "^1.2.0",
     "parse-server": "^2.8.4",
     "string-similarity": "^2.0.0",
+    "thai-wordcut": "^0.7.7",
     "wordcut": "^0.8.2"
   },
   "scripts": {
