@@ -3,9 +3,11 @@ var appQueryLimitMin = 10000;
 var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
-// var Parse = require('parse/node').Parse;
+var Parse = require('parse/node').Parse;
 
-wordcut.init();
+// wordcut.init();
+wordcut.init('customdict.txt', true);
+console.log(wordcut.cut("กินข้าวกันมั้ย"));
 
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi Guy');
