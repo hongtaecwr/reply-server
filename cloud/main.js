@@ -8,7 +8,7 @@ var stringSimilarity = require('string-similarity');
 wordcut.init();
 
 Parse.Cloud.define('hello', function(req, res) {
-  res.success('Hi');
+  res.success('Hi Guy');
 });
 
 Parse.Cloud.define('testMsg', function(req, res) {
