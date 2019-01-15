@@ -7,7 +7,7 @@ var stringSimilarity = require('string-similarity');
 
 // wordcut.init();
 wordcut.init('customdict.txt', true);
-
+console.log(wordcut.cut("สวัสดีครับน้องแชทบอทสวัสดีครับคุณครู สวัสดีครับพี่ชาย"));
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
 });
