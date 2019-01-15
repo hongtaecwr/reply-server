@@ -1,11 +1,12 @@
 var appQueryLimit = 99999;
 var appQueryLimitMin = 10000;
-var wordcut = require("thai-wordcut");
+var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
 // var Parse = require('parse/node').Parse;
 
-wordcut.init();
+// wordcut.init();
+wordcut.init('/customdict.txt', true);
 
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
