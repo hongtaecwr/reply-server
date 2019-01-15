@@ -6,7 +6,7 @@ var stringSimilarity = require('string-similarity');
 // var Parse = require('parse/node').Parse;
 
 // wordcut.init();
-wordcut.init('customdict.txt', true);
+wordcut.init('../customdict.txt', true);
 
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
