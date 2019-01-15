@@ -7,7 +7,7 @@ var Parse = require('parse/node').Parse;
 
 // wordcut.init();
 wordcut.init('customdict.txt', true);
-console.log(wordcut.cut("สวัสดีครับน้องแชทบอทสวัสดีครับคุณครู สวัสดีครับพี่ชาย"));
+console.log(wordcut.cut("กินข้าวกันมั้ย"));
 
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
