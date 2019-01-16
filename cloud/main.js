@@ -7,7 +7,7 @@ var stringSimilarity = require('string-similarity');
 
 // wordcut.init();
 
-wordcut.init('customdict.txt',true);
+wordcut.init('cloud/customdict.txt',true);
 console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง"));
 
 Parse.Cloud.define('hello', function(req, res) {
