@@ -244,7 +244,7 @@ Parse.Cloud.define("findBestReplyMsgFromCharSet", function(request, response) {
   let arr = wc.split('|');
  
  
-  console.log("wordcut:" + wordcut.cut(msgFromUser));
+  //console.log("wordcut:" + wordcut.cut(msgFromUser));
   //console.log("request:" + request.params["msg"]);
   //console.log("msg from user:" + msgFromUser);
   //console.log("arr:" + JSON.stringify(arr));
