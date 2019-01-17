@@ -8,7 +8,7 @@ var stringSimilarity = require('string-similarity');
 // wordcut.init();
 
 wordcut.init('cloud/customdict.txt',true);
-console.log(wordcut.cut("กินข้าวยัง"));
+console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง"));
 
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
@@ -244,10 +244,10 @@ Parse.Cloud.define("findBestReplyMsgFromCharSet", function(request, response) {
   let arr = wc.split('|');
  
  
-  console.log("wordcut:" + wordcut.cut(msgFromUser));
-  console.log("request:" + request.params["msg"]);
-  console.log("msg from user:" + msgFromUser);
-  console.log("arr:" + JSON.stringify(arr));
+  //console.log("wordcut:" + wordcut.cut(msgFromUser));
+  //console.log("request:" + request.params["msg"]);
+  //console.log("msg from user:" + msgFromUser);
+  //console.log("arr:" + JSON.stringify(arr));
 
   if (msgFromUser == null) {
     response.error("request null values");
