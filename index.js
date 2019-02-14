@@ -21,7 +21,15 @@ var dashboard = new ParseDashboard({
     "appId": "myAppId",
     "masterKey": "myMasterKey",
     "appName": "replyserver",
-  }],
+  },
+  {
+    "serverURL": "https://foodserver.herokuapp.com/parse",
+    "appId": "myAppId",
+    "masterKey": "myMasterKey",
+    "appName": "foodserver",
+  }
+
+],
   "users": [{
     "user": "hongtaedb",
     "pass": "hongtaedb"
