@@ -5,7 +5,10 @@ var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
 // var Parse = require('parse/node').Parse;
 
-wordcut.init();
+// wordcut.init();
+
+wordcut.init('cloud/customdict.txt',true);
+console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง สุนัขคือหมา"));
 
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
@@ -23,7 +26,6 @@ Parse.Cloud.define('testMsg', function(req, res) {
 Parse.Cloud.define('getReplyMsg', function(request, response) {
   getReplyMsg(request, {
     success: function(result) {
-      // Do stuff with users
       response.success(result);
     },
     error: function(error) {
@@ -149,7 +151,7 @@ Parse.Cloud.define('findBestReplyMsg', function(request, response) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   //console.log("request:" + request.params["msg"]);
-  //console.log("msg from user:" + msgFromUser);
+  console.log("msg from user:" + msgFromUser);
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
