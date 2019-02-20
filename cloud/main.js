@@ -476,7 +476,36 @@ function getReplyMsg(request, response) {
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////Form Myhealthbot////////////////////////////////
+function testSynonym(messageText) {
+  var messageData = messageText;
+  if (messageData != '' || messageData != null) {
+////////////////////////Synonym////////////////////////////
+    messageData = messageData.replace(/จับไข้/g, 'เป็นไข้');
+    messageData = messageData.replace(/เจ็บป่วย/g, 'เป็นไข้');
+    messageData = messageData.replace(/ป่วย/g, 'เป็นไข้');
+    messageData = messageData.replace(/ไม่สบาย/g, 'เป็นไข้');
+
+    messageData = messageData.replace(/ทานข้าว/g, 'รับประทานอาหาร');
+    messageData = messageData.replace(/กินข้าว/g, 'รับประทานอาหาร');
+    messageData = messageData.replace(/รับประทานข้าว/g, 'รับประทานอาหาร');
+  }
+  return messageData;
+}
+
+////////////////////////////Parse Test//////////////////////////////////////////////////
+Parse.Cloud.define("symtest", async (request) => {
+  const query = new Parse.Query("Synonym");
+  query.equalTo("word", request.params.movie);
+  const results = await query.find();
+  let sum = 0;
+  for (let i = 0; i < results.length; ++i) {
+    sum += results[i].get("word");
+  }
+  return sum / results.length;
+});
+
+///////////////////////////////////////
 function chain1(response){
   var MSG = Parse.Object.extend("Message");
   var UNMSG = Parse.Object.extend("UnknownMessage");
