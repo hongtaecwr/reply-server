@@ -442,7 +442,7 @@ function getReplyMsg(request, response) {
         if (msgResponse.length == 0) {
           response.success({
             "msg": msgFromUser,
-            "replyMsg": ""
+            "replyMsg": "test"
           });
         } else {
           contents = msgResponse[0].get("replyMsg");
