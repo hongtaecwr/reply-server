@@ -503,6 +503,7 @@ Parse.Cloud.define("symtest", async (request) => {
     sum += results[i].get("word");
   }
   return sum / results.length;
+  console.log(sum);
 });
 
 ///////////////////////////////////////
