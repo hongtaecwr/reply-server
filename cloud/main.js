@@ -494,17 +494,16 @@ function testSynonym(messageText) {
 }
 
 ////////////////////////////Parse Test//////////////////////////////////////////////////
-Parse.Cloud.define("symtest", async (request) => {
-  const query = new Parse.Query("Synonym");
-  query.equalTo("word", request.params.movie);
-  const results = await query.find();
-  let sum = 0;
-  for (let i = 0; i < results.length; ++i) {
-    sum += results[i].get("word");
-  }
-  return sum / results.length;
-  console.log(sum);
-});
+const GameScore = Parse.Object.extend("GameScore");
+const query = new Parse.Query(GameScore);
+query.equalTo("playerName", "Dan Stemkoski");
+const results = await query.find();
+alert("Successfully retrieved " + results.length + " scores.");
+// Do something with the returned Parse.Object values
+for (let i = 0; i < results.length; i++) {
+  var object = results[i];
+  alert(object.id + ' - ' + object.get('playerName'));
+} 
 
 ///////////////////////////////////////
 function chain1(response){
