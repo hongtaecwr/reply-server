@@ -495,6 +495,18 @@ function testSynonym(messageText) {
 
 ////////////////////////////Parse Test//////////////////////////////////////////////////
 
+const GameScore = Parse.Object.extend("GameScore");
+const query = new Parse.Query(GameScore);
+query.equalTo("playerName", "Dan Stemkoski");
+const results = await query.find();
+alert("Successfully retrieved " + results.length + " scores.");
+// Do something with the returned Parse.Object values
+for (let i = 0; i < results.length; i++) {
+  var object = results[i];
+  alert(object.id + ' - ' + object.get('playerName'));
+} 
+
+
 ///////////////////////////////////////
 function chain1(response){
   var MSG = Parse.Object.extend("Message");
