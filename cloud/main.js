@@ -429,7 +429,7 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  console.log("request:" + request.params["msg"]);
+  console.log("request:" + request.params.msg);
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
