@@ -424,12 +424,12 @@ Parse.Cloud.define("createMsgFromUnknow", function(request, response) {
     });
 });
 
-////Very Good/////////////////////////////////////////////////////////////
+////รับเข้ามาแล้วส่งมานี่/////////////////////////////////////////////////////////////
 function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  ////console.log("request:" + request.params["msg"]);
+  console.log("request:" + request.params["msg"]);
   //console.log("msg from user:" + msgFromUser);
   if (msgFromUser == null) {
     response.error("request null values");
@@ -626,7 +626,6 @@ function chain2(response){
       console.log("query unsuccessful, error:" + error.code + " " + error.message);
     });
 }
-
 
 Parse.Cloud.define("runchain", function(request, response) {
   chain1(function(res){
