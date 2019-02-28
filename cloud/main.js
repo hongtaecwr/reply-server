@@ -3,9 +3,7 @@ var appQueryLimitMin = 10000;
 var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
-// var Parse = require('parse/node').Parse;
-
-// wordcut.init();
+const synonym = require('./synonym.js');
 
 wordcut.init('cloud/customdict.txt',true);
 console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง สุนัขคือหมา"));
@@ -429,6 +427,7 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
 //////Synonym Process//////
+
   var str = request.params.msg;
   var msgFromUser = str.replace(/หมา/g, "สุนัข");
 //////End of Synonym Process//////
