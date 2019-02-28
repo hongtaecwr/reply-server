@@ -32,6 +32,64 @@ Parse.Cloud.define('getReplyMsg', function(request, response) {
   });
 });
 
+////รับเข้ามาแล้วส่งมานี่/////////////////////////////////////////////////////////////
+function getReplyMsg(request, response) {
+  var MSG = Parse.Object.extend("Message");
+  var query = new Parse.Query(MSG);
+//////Synonym Process//////
+
+  var str = request.params.msg;
+  var msgFromUser = str.replace(/หมา/g, "สุนัข");
+//////End of Synonym Process//////
+  console.log("Before Replace : " + request.params["msg"]);
+  console.log("After Replace : " + msgFromUser);
+  if (msgFromUser == null) {
+    response.error("request null values");
+  } else {
+    query.equalTo("msg", msgFromUser);
+    query.limit(appQueryLimit);
+    query.find({
+      success: function(msgResponse) {
+        var contents = [];
+        if (msgResponse.length == 0) {
+          response.success({
+            "msg": msgFromUser,
+            "replyMsg": ""
+          });
+        } else {
+          contents = msgResponse[0].get("replyMsg");
+          ////console.log("msgResponse:" + msgResponse);
+          ////console.log("contents:" + contents);
+          var replyCount = contents.length;
+          //console.log("replyCount:" + replyCount);
+          if (replyCount == 0) {
+            response.success({
+              "msg": msgFromUser,
+              "replyMsg": ""
+            });
+            //console.log("resultReplyMsg:" + "0");
+          } else {
+            var randomIndex = Math.floor((Math.random() * replyCount) + 0);
+            //console.log("randomIndex:" + randomIndex);
+            var resultReplyMsg = contents[randomIndex].toString();
+            response.success({
+              "msg": msgFromUser,
+              "replyMsg": resultReplyMsg
+            });
+            //console.log("resultReplyMsg:" + resultReplyMsg);
+          }
+        }
+        //response.success(msgResponse);
+      },
+      error: function() {
+        response.error("get replyMsg failed");
+      }
+    });
+  }
+}
+
+
+
 
 Parse.Cloud.define('botTraining', function(request, response) {
   var MSG = Parse.Object.extend("Message");
@@ -142,11 +200,6 @@ Parse.Cloud.define('createUnknowMsg', function(request, response) {
   } // end else
 });
 
-
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
   var MSG = Parse.Object.extend("Message");
@@ -211,136 +264,3 @@ Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
     });
   }
 });
-
-//////////////////////////////////////////////////////////////////////
-Parse.Cloud.define("createMsgFromUnknow", function(request, response) {
-  var MSG = Parse.Object.extend("Message");
-  var UNMSG = Parse.Object.extend("UnknownMessage");
-  var limit = request.params.limit;
-
-  var query = new Parse.Query(UNMSG);
-  query.limit(limit);
-  query.notEqualTo('replyMsg', null);
-  query.find({
-    useMasterKey: true
-  }).then(function(res) {
-      var objs = [];
-      var removeobjs = [];
-
-      for (var i = 0; i < res.length; i++) {
-        var obj = res[i];
-        var msgArray = res[i].get('msg');
-        var replyMsgArray = res[i].get('replyMsg');
-        var msgChar = msgArray.join('');
-        var wc = wordcut.cut(msgChar)
-        let arr = wc.split('|');
-        var msgObj = new MSG();
-        msgObj.set("wordsArray", arr);
-        msgObj.set("msg", msgArray);
-        msgObj.set("replyMsg", replyMsgArray);
-
-        objs.push(msgObj);
-        removeobjs.push(obj);
-      }
-      Parse.Object.saveAll(objs, {
-        success: function(result) {
-          //console.log("saveAll done");
-          Parse.Object.destroyAll(removeobjs, {
-            success: function(result) {
-              response.success("save and destroyAll done");
-              //console.log("save and destroyAll done");
-            },
-            error: function(err) {
-              response.error("destroyAll error:" + err.message);
-            }
-          });
-        },
-        error: function(err) {
-          response.error("saveAll error:" + err.message);
-        }
-      });
-
-
-    },
-    function(error) {
-      response.error("query unsuccessful, error:" + error.code + " " + error.message);
-    });
-});
-
-////รับเข้ามาแล้วส่งมานี่/////////////////////////////////////////////////////////////
-function getReplyMsg(request, response) {
-  var MSG = Parse.Object.extend("Message");
-  var query = new Parse.Query(MSG);
-//////Synonym Process//////
-
-  var str = request.params.msg;
-  var msgFromUser = str.replace(/หมา/g, "สุนัข");
-//////End of Synonym Process//////
-  console.log("Before Replace : " + request.params["msg"]);
-  console.log("After Replace : " + msgFromUser);
-  if (msgFromUser == null) {
-    response.error("request null values");
-  } else {
-    query.equalTo("msg", msgFromUser);
-    query.limit(appQueryLimit);
-    query.find({
-      success: function(msgResponse) {
-        var contents = [];
-        if (msgResponse.length == 0) {
-          response.success({
-            "msg": msgFromUser,
-            "replyMsg": ""
-          });
-        } else {
-          contents = msgResponse[0].get("replyMsg");
-          ////console.log("msgResponse:" + msgResponse);
-          ////console.log("contents:" + contents);
-          var replyCount = contents.length;
-          //console.log("replyCount:" + replyCount);
-          if (replyCount == 0) {
-            response.success({
-              "msg": msgFromUser,
-              "replyMsg": ""
-            });
-            //console.log("resultReplyMsg:" + "0");
-          } else {
-            var randomIndex = Math.floor((Math.random() * replyCount) + 0);
-            //console.log("randomIndex:" + randomIndex);
-            var resultReplyMsg = contents[randomIndex].toString();
-            response.success({
-              "msg": msgFromUser,
-              "replyMsg": resultReplyMsg
-            });
-            //console.log("resultReplyMsg:" + resultReplyMsg);
-          }
-        }
-        //response.success(msgResponse);
-      },
-      error: function() {
-        response.error("get replyMsg failed");
-      }
-    });
-  }
-}
-
-////////////////////////////////////Form Myhealthbot////////////////////////////////
-function testSynonym(messageText) {
-  var messageData = messageText;
-  if (messageData != '' || messageData != null) {
-////////////////////////Synonym////////////////////////////
-    messageData = messageData.replace(/จับไข้/g, 'เป็นไข้');
-    messageData = messageData.replace(/เจ็บป่วย/g, 'เป็นไข้');
-    messageData = messageData.replace(/ป่วย/g, 'เป็นไข้');
-    messageData = messageData.replace(/ไม่สบาย/g, 'เป็นไข้');
-
-    messageData = messageData.replace(/ทานข้าว/g, 'รับประทานอาหาร');
-    messageData = messageData.replace(/กินข้าว/g, 'รับประทานอาหาร');
-    messageData = messageData.replace(/รับประทานข้าว/g, 'รับประทานอาหาร');
-  }
-  return messageData;
-}
-
-////////////////////////////Parse Test//////////////////////////////////////////////////
-
-
-///////////////////////////////////////
