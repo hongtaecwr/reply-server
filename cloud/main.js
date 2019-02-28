@@ -207,11 +207,6 @@ Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
   var msgFromUser = request.params.msg;
   var wc = wordcut.cut(msgFromUser)
   let arr = wc.split('|');
-  //console.log("wordcut:" + wordcut.cut(msgFromUser));
-  //console.log("request:" + request.params["msg"]);
-  //console.log("msg from user:" + msgFromUser);
-  //console.log("arr:" + JSON.stringify(arr));
-
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
