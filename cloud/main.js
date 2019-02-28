@@ -429,10 +429,9 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var str = request.params.msg;
-
   var msgFromUser = str.replace(/ทดสอบ/g, "Test");
-  console.log(msgFromUser);
-  console.log("request:" + request.params["msg"]);
+  console.log("Before Replace:" + request.params["msg"]);
+  console.log("After Replace" + msgFromUser);
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
