@@ -428,7 +428,10 @@ Parse.Cloud.define("createMsgFromUnknow", function(request, response) {
 function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
-  var msgFromUser = request.params.msg;
+  var str = request.params.msg;
+
+  var msgFromUser = str.replace(/ทดสอบ/g, "Test");
+  console.log(msgFromUser);
   console.log("request:" + request.params["msg"]);
   if (msgFromUser == null) {
     response.error("request null values");
