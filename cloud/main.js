@@ -428,10 +428,12 @@ Parse.Cloud.define("createMsgFromUnknow", function(request, response) {
 function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
+//////Synonym Process//////
   var str = request.params.msg;
   var msgFromUser = str.replace(/หมา/g, "สุนัข");
-  console.log("Before Replace:" + request.params["msg"]);
-  console.log("After Replace" + msgFromUser);
+//////End of Synonym Process//////
+  console.log("Before Replace : " + request.params["msg"]);
+  console.log("After Replace : " + msgFromUser);
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
