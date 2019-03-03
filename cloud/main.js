@@ -37,7 +37,6 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
 //////Synonym Process//////
-
   var str = request.params.msg;
   var msgFromUser = str.replace(/หมา/g, "สุนัข");
 //////End of Synonym Process//////
