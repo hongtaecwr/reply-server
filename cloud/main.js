@@ -8,6 +8,7 @@ const synonym = require('./synonym.js');
 wordcut.init('cloud/customdict.txt',true);
 console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง สุนัขคือหมา"));
 
+
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
 });
@@ -257,4 +258,11 @@ Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
       }
     });
   }
+});
+//////////////////////
+Parse.Cloud.define('Test', function(req,res){
+  var tag = Parse.Object.extend("Tag");
+  var query = new Parse.Query(tag);
+  var name = request.params.name;
+  console.log("Before Replace : " + request.params["name"]);
 });
