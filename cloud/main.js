@@ -39,7 +39,7 @@ function getReplyMsg(request, response) {
   var query = new Parse.Query(MSG);
 //////Synonym Process//////
   var str = request.params.msg;
-  var msgFromUser = str.replace(/หมา/g, "สุนัข");
+  var msgFromUser = str.replace(/กระเพรา/g, "กะเพรา");
 //////End of Synonym Process//////
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
