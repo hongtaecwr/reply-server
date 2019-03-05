@@ -38,8 +38,14 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
 //////Synonym Process//////
-  var str = request.params.msg;
-  var msgFromUser = str.replace(/กระเพรา/g, "กะเพรา");
+  var msgFromUser = request.params.msg;
+if (msgFromUser != '' || msgFromUser != null) {
+  msgFromUser = msgFromUser.replace(/ทดสอบ/g, 'Test');
+  msgFromUser = msgFromUser.replace(/่ฮ่องเต้/g, 'Test');
+  msgFromUser = msgFromUser.replace(/อิอิ/g, 'Test');
+  msgFromUser = msgFromUser.replace(/สุดยอด/g, 'Test');
+}
+  // var msgFromUser = str.replace(/กระเพรา/g, "กะเพรา");
 //////End of Synonym Process//////
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
