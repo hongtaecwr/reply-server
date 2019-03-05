@@ -40,7 +40,7 @@ function getReplyMsg(request, response) {
 //////Synonym Process//////
   var msgFromUser = request.params.msg;
 if (msgFromUser != '' || msgFromUser != null) {
-  msgFromUser = msgFromUser.replace(/ทดสอบ/g, 'Test');
+  msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
   msgFromUser = msgFromUser.replace(/่ฮ่องเต้/g, 'Test');
   msgFromUser = msgFromUser.replace(/อิอิ/g, 'Test');
   msgFromUser = msgFromUser.replace(/สุดยอด/g, 'Test');
