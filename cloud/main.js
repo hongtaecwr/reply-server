@@ -41,9 +41,13 @@ function getReplyMsg(request, response) {
   var msgFromUser = request.params.msg;
 if (msgFromUser != '' || msgFromUser != null) {
   msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
-  msgFromUser = msgFromUser.replace(/่ฮ่องเต้/g, 'Test');
-  msgFromUser = msgFromUser.replace(/อิอิ/g, 'Test');
-  msgFromUser = msgFromUser.replace(/สุดยอด/g, 'Test');
+  msgFromUser = msgFromUser.replace(/่เป็นหวัด/g, 'มีไข้');
+  msgFromUser = msgFromUser.replace(/ฉี่/g, 'ปัสสาวะ');
+  msgFromUser = msgFromUser.replace(/ขี้มูก/g, 'น้ำมูก');
+  msgFromUser = msgFromUser.replace(/อ้วก/g, 'อาเจียน');
+  msgFromUser = msgFromUser.replace(/จะอ้วก/g, 'คลื่นไส้');
+  msgFromUser = msgFromUser.replace(/ปวดหัว/g, 'ปวดศีรษะ');
+  msgFromUser = msgFromUser.replace(/หัว/g, 'ศีรษะ');
 }
 
 //////End of Synonym Process//////
