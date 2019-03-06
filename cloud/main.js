@@ -3,7 +3,6 @@ var appQueryLimitMin = 10000;
 var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
-const synonym = require('./synonym.js');
 
 wordcut.init('cloud/customdict.txt',true);
 console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง สุนัขคือหมา"));
