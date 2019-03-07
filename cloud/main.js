@@ -48,6 +48,7 @@ if (msgFromUser != '' || msgFromUser != null) {
   msgFromUser = msgFromUser.replace(/จะอ้วก/g, 'คลื่นไส้');
   msgFromUser = msgFromUser.replace(/ปวดหัว/g, 'ปวดศีรษะ');
   msgFromUser = msgFromUser.replace(/หัว/g, 'ศีรษะ');
+  msgFromUser = msgFromUser.replace(/เสลด/g, 'เสมหะ');
 }
 
 //////End of Synonym Process//////
