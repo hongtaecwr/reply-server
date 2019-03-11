@@ -41,6 +41,7 @@ function getReplyMsg(request, response) {
   var msgFromUser = request.params.msg;
 if (msgFromUser != '' || msgFromUser != null) {
   msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
+  msgFromUser = msgFromUser.replace(/บาวหวาน/g, 'เบาหวาน');
   msgFromUser = msgFromUser.replace(/่เป็นหวัด/g, 'มีไข้');
   msgFromUser = msgFromUser.replace(/ฉี่/g, 'ปัสสาวะ');
   msgFromUser = msgFromUser.replace(/ขี้มูก/g, 'น้ำมูก');
