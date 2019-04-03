@@ -325,8 +325,8 @@ Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
 //////////////////////
 Parse.Cloud.define('addSynonym', function(request, response) {
   var SYN = Parse.Object.extend("Synonym");
-  var CommonwordFromUser = request.params.msg;
-  var SynonymwordFromUser = request.params.replyMsg;
+  var CommonwordFromUser = request.params.common_word;
+  var SynonymwordFromUser = request.params.synonym_word;
   if (CommonwordFromUser == null || SynonymwordFromUser == null) {
     response.error("request null values");
   } else {
