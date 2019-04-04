@@ -361,7 +361,7 @@ Parse.Cloud.define('addSynonym', function(request, response) {
           for (var i = 0; i < CommonwordFromUser.length; i++) {
             var msgChar = CommonwordFromUser[i];
             let arr = msgChar.split('|');
-            synOBJ.addUnique("wordsArray", arr);
+            synOBJ.addUnique("synArray", arr);
             synOBJ.addUnique("common_word", CommonwordFromUser[i]);
           }
           for (var i = 0; i < SynonymwordFromUser.length; i++) {
