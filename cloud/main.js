@@ -50,9 +50,9 @@ if (msgFromUser != '' || msgFromUser != null) {
   msgFromUser = msgFromUser.replace(/หัว/g, 'ศีรษะ');
   msgFromUser = msgFromUser.replace(/เสลด/g, 'เสมหะ');
 }
-/////End of Synonym Process//////
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
+  /////End of Synonym Process//////
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
