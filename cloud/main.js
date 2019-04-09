@@ -359,14 +359,14 @@ Parse.Cloud.define('addSynonym', function (request, response) {
           var synOBJ = new SYN();
           synOBJ = synResponse[0];
           for (var i = 0; i < CommonwordFromUser.length; i++) {
-            var msgChar = CommonwordFromUser;
+            var msgChar = CommonwordFromUser[i];
             var wc = wordcut.cut(msgChar)
             let arr = wc.split('|');
             synOBJ.addUnique("synArray", arr);
-            synOBJ.addUnique("common_word", CommonwordFromUser);
+            synOBJ.addUnique("common_word", CommonwordFromUser[i]);
           }
           for (var i = 0; i < SynonymwordFromUser.length; i++) {
-            synOBJ.addUnique("synonym_word", SynonymwordFromUser);
+            synOBJ.addUnique("synonym_word", SynonymwordFromUser[i]);
           }
           synOBJ.save(null, {
             success: function (success) {
@@ -404,7 +404,7 @@ Parse.Cloud.define('querySyn', function (request, response) {
       success: function (msgResponse) {
         var contents = [];
         for (var i = 0; i < msgResponse.length; i++) {
-          contents.push(msgResponse[i].get(""))
+          contents.push(msgResponse[i].get("syno"))
         }
       }
     })
