@@ -4,15 +4,15 @@ var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
 
-wordcut.init('cloud/customdict.txt',true);
+wordcut.init('cloud/customdict.txt', true);
 console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง สุนัขคือหมา"));
 
 
-Parse.Cloud.define('hello', function(req, res) {
+Parse.Cloud.define('hello', function (req, res) {
   res.success('Hi');
 });
 
-Parse.Cloud.define('testMsg', function(req, res) {
+Parse.Cloud.define('testMsg', function (req, res) {
   var msgFromUser = req.params.msg;
   //console.log("msg from user:" + msgFromUser);
   res.success({
@@ -21,12 +21,12 @@ Parse.Cloud.define('testMsg', function(req, res) {
   });
 });
 
-Parse.Cloud.define('getReplyMsg', function(request, response) {
+Parse.Cloud.define('getReplyMsg', function (request, response) {
   getReplyMsg(request, {
-    success: function(result) {
+    success: function (result) {
       response.success(result);
     },
-    error: function(error) {
+    error: function (error) {
       response.error(error);
     }
   });
@@ -36,20 +36,20 @@ Parse.Cloud.define('getReplyMsg', function(request, response) {
 function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
-//////Synonym Process//////
   var msgFromUser = request.params.msg;
-if (msgFromUser != '' || msgFromUser != null) {
-  msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
-  msgFromUser = msgFromUser.replace(/บาวหวาน/g, 'เบาหวาน');
-  msgFromUser = msgFromUser.replace(/่เป็นหวัด/g, 'มีไข้');
-  msgFromUser = msgFromUser.replace(/ฉี่/g, 'ปัสสาวะ');
-  msgFromUser = msgFromUser.replace(/ขี้มูก/g, 'น้ำมูก');
-  msgFromUser = msgFromUser.replace(/อ้วก/g, 'อาเจียน');
-  msgFromUser = msgFromUser.replace(/จะอ้วก/g, 'คลื่นไส้');
-  msgFromUser = msgFromUser.replace(/ปวดหัว/g, 'ปวดศีรษะ');
-  msgFromUser = msgFromUser.replace(/หัว/g, 'ศีรษะ');
-  msgFromUser = msgFromUser.replace(/เสลด/g, 'เสมหะ');
-}
+  //////Synonym Process//////
+  if (msgFromUser != '' || msgFromUser != null) {
+    msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
+    msgFromUser = msgFromUser.replace(/บาวหวาน/g, 'เบาหวาน');
+    msgFromUser = msgFromUser.replace(/่เป็นหวัด/g, 'มีไข้');
+    msgFromUser = msgFromUser.replace(/ฉี่/g, 'ปัสสาวะ');
+    msgFromUser = msgFromUser.replace(/ขี้มูก/g, 'น้ำมูก');
+    msgFromUser = msgFromUser.replace(/อ้วก/g, 'อาเจียน');
+    msgFromUser = msgFromUser.replace(/จะอ้วก/g, 'คลื่นไส้');
+    msgFromUser = msgFromUser.replace(/ปวดหัว/g, 'ปวดศีรษะ');
+    msgFromUser = msgFromUser.replace(/หัว/g, 'ศีรษะ');
+    msgFromUser = msgFromUser.replace(/เสลด/g, 'เสมหะ');
+  }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
   /////End of Synonym Process//////
@@ -59,7 +59,7 @@ if (msgFromUser != '' || msgFromUser != null) {
     query.equalTo("msg", msgFromUser);
     query.limit(appQueryLimit);
     query.find({
-      success: function(msgResponse) {
+      success: function (msgResponse) {
         var contents = [];
         if (msgResponse.length == 0) {
           response.success({
@@ -91,14 +91,14 @@ if (msgFromUser != '' || msgFromUser != null) {
         }
         //response.success(msgResponse);
       },
-      error: function() {
+      error: function () {
         response.error("get replyMsg failed");
       }
     });
   }
 }
 
-Parse.Cloud.define('findBestReplyMsg', function(request, response) {
+Parse.Cloud.define('findBestReplyMsg', function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
@@ -114,7 +114,7 @@ Parse.Cloud.define('findBestReplyMsg', function(request, response) {
     query.matches("msg", '.*' + msgChar + '.*');
     query.limit(appQueryLimit);
     query.find({
-      success: function(msgResponse) {
+      success: function (msgResponse) {
         var contents = [];
         if (msgResponse.length == 0) {
           response.success({
@@ -146,7 +146,7 @@ Parse.Cloud.define('findBestReplyMsg', function(request, response) {
         }
         //response.success(msgResponse);
       },
-      error: function() {
+      error: function () {
         response.error("get replyMsg failed");
       }
     });
@@ -154,7 +154,7 @@ Parse.Cloud.define('findBestReplyMsg', function(request, response) {
 });
 
 
-Parse.Cloud.define('botTraining', function(request, response) {
+Parse.Cloud.define('botTraining', function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var msgFromUser = request.params.msg;
   var replyMsgFromUser = request.params.replyMsg;
@@ -166,7 +166,7 @@ Parse.Cloud.define('botTraining', function(request, response) {
     query.containedIn("msg", msgFromUser);
     query.limit(appQueryLimit);
     query.find({
-      success: function(msgResponse) {
+      success: function (msgResponse) {
         var contents = [];
         if (msgResponse.length == 0) {
           // add new msg
@@ -178,13 +178,13 @@ Parse.Cloud.define('botTraining', function(request, response) {
           let arr = wc.split('|');
           msgOBJ.set("wordsArray", arr);
           msgOBJ.save(null, {
-            success: function(success) {
+            success: function (success) {
               response.success({
                 "msg": msgFromUser,
                 "replyMsg": replyMsgFromUser
               });
             },
-            error: function(error) {
+            error: function (error) {
               response.error("save failed : " + error.code);
             }
           });
@@ -203,27 +203,27 @@ Parse.Cloud.define('botTraining', function(request, response) {
             msgOBJ.addUnique("replyMsg", replyMsgFromUser[i]);
           }
           msgOBJ.save(null, {
-            success: function(success) {
+            success: function (success) {
               response.success({
                 "msg": msgFromUser,
                 "replyMsg": replyMsgFromUser
               });
             },
-            error: function(error) {
+            error: function (error) {
               response.error("save failed : " + error.code);
             }
           });
         }
         //response.success(msgResponse);
       },
-      error: function() {
+      error: function () {
         response.error("get replyMsg failed");
       }
     });
   } // end else
 });
 //////////////////////////////
-Parse.Cloud.define('createUnknowMsg', function(request, response) {
+Parse.Cloud.define('createUnknowMsg', function (request, response) {
   var MSG = Parse.Object.extend("UnknownMessage");
   var msgFromUser = request.params.msg;
   var replyMsgFromUser = request.params.replyMsg;
@@ -236,7 +236,7 @@ Parse.Cloud.define('createUnknowMsg', function(request, response) {
     query.containedIn("msg", msgFromUser);
     query.limit(appQueryLimit);
     query.find({
-      success: function(msgResponse) {
+      success: function (msgResponse) {
         var contents = [];
         if (msgResponse.length == 0) {
           // add new msg
@@ -244,19 +244,19 @@ Parse.Cloud.define('createUnknowMsg', function(request, response) {
           msgOBJ.set("msg", msgFromUser);
           msgOBJ.set("replyMsg", replyMsgFromUser);
           msgOBJ.save(null, {
-            success: function(success) {
+            success: function (success) {
               response.success({
                 "msg": msgFromUser
               });
             },
-            error: function(error) {
+            error: function (error) {
               response.error("save failed : " + error.code);
             }
           });
         }
         //response.success(msgResponse);
       },
-      error: function() {
+      error: function () {
         response.error("find failed");
       }
     });
@@ -264,7 +264,7 @@ Parse.Cloud.define('createUnknowMsg', function(request, response) {
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
+Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
@@ -276,7 +276,7 @@ Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
     query.containedIn("wordsArray", arr);
     query.limit(appQueryLimit);
     query.find({
-      success: function(msgResponse) {
+      success: function (msgResponse) {
         var contents = [];
         if (msgResponse.length == 0 || msgResponse == null) {
           response.success({
@@ -285,9 +285,9 @@ Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
           });
         } else {
           var msgArray = [];
-          _.each(msgResponse, function(obj) {
+          _.each(msgResponse, function (obj) {
             var msgs = obj.get('msg');
-            _.each(msgs, function(msg) {
+            _.each(msgs, function (msg) {
               msgArray.push(msg);
             });
           });
@@ -302,28 +302,28 @@ Parse.Cloud.define("findBestMsgFromUnknow", function(request, response) {
               msg: target
             }
           }, {
-            success: function(result) {
-              //console.log("result:" + JSON.stringify(result));
-              response.success({
-                "msg": msgFromUser,
-                "replyMsg": result.replyMsg
-              });
-            },
-            error: function(error) {
-              response.error(error);
-            }
-          });
+              success: function (result) {
+                //console.log("result:" + JSON.stringify(result));
+                response.success({
+                  "msg": msgFromUser,
+                  "replyMsg": result.replyMsg
+                });
+              },
+              error: function (error) {
+                response.error(error);
+              }
+            });
         }
         //response.success(msgResponse);
       },
-      error: function() {
+      error: function () {
         response.error("get replyMsg failed");
       }
     });
   }
 });
 //////////////////////
-Parse.Cloud.define('addSynonym', function(request, response) {
+Parse.Cloud.define('addSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var CommonwordFromUser = request.params.common_word;
   var SynonymwordFromUser = request.params.synonym_word;
@@ -334,7 +334,7 @@ Parse.Cloud.define('addSynonym', function(request, response) {
     query.containedIn("common_word", CommonwordFromUser);
     query.limit(appQueryLimit);
     query.find({
-      success: function(synResponse) {
+      success: function (synResponse) {
         var contents = [];
         if (synResponse.length == 0) {
           var synOBJ = new SYN();
@@ -345,13 +345,13 @@ Parse.Cloud.define('addSynonym', function(request, response) {
           let array = wc.split('|');
           synOBJ.set("synArray", array);
           synOBJ.save(null, {
-            success: function(success) {
+            success: function (success) {
               response.success({
                 "common_word": CommonwordFromUser,
                 "synonym_word": SynonymwordFromUser
               });
             },
-            error: function(error) {
+            error: function (error) {
               response.error("save failed : " + error.code);
             }
           });
@@ -370,29 +370,66 @@ Parse.Cloud.define('addSynonym', function(request, response) {
             synOBJ.addUnique("synonym_word", SynonymwordFromUser[i]);
           }
           synOBJ.save(null, {
-            success: function(success) {
+            success: function (success) {
               response.success({
                 "common_word": CommonwordFromUser,
                 "synonym_word": SynonymwordFromUser
               });
             },
-            error: function(error) {
+            error: function (error) {
               response.error("save failed : " + error.code);
             }
           });
         }
         //response.success(msgResponse);
       },
-      error: function() {
+      error: function () {
         response.error("get Synonym failed");
       }
     });
   } // end else
 });
+
 ///////////////////////
-Parse.Cloud.define('Test', function(req,res){
-  var tag = Parse.Object.extend("Tag");
-  var query = new Parse.Query(tag);
-  var name = request.params.name;
-  console.log("Before Replace : " + request.params["name"]);
-});
+/* Parse.Cloud.define('querySyn', function (request, response) {
+  var SYN = Parse.Object.extend("Synonym");
+  var MSG = Parse.Object.extend("Message");
+  var query = new Parse.Query(MSG);
+  var query2 = new Parse.Query(SYN);
+  var msgFromUser = req.params.msg;
+  if (msgFromUser != '' || msgFromUser != null){
+    query2
+  }
+
+  if (msgFromUser == null) {
+    response.error("request null values");
+  } else {
+    query.equalTo("msg", msgFromUser);
+  }
+}
+) */
+///////////////////////
+Parse.Cloud.define('querySyn', function (request, response) {
+  var SYN = Parse.Object.extend("Synonym");
+  var query = new Parse.Query(SYN);
+  query.equalTo("common_word", "กิน");
+  query.limit(appQueryLimit);
+  query.find({
+    success: function (msgResponse) {
+      var contents = [];
+      if (msgResponse.length == 0) {
+        response.success({
+          "common_word": "กิน",
+          "synonym_word": ""
+        });
+      }
+    }
+  })
+  });
+  ///////////////////////
+  Parse.Cloud.define('Test', function (req, res) {
+    var tag = Parse.Object.extend("Tag");
+    var query = new Parse.Query(tag);
+    var name = request.params.name;
+    console.log("Before Replace : " + request.params["name"]);
+  });
