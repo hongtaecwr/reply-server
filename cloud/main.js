@@ -427,9 +427,3 @@ Parse.Cloud.define('querySyn', function (request, response) {
   })
   });
   ///////////////////////
-  Parse.Cloud.define('Test', function (req, res) {
-    var tag = Parse.Object.extend("Tag");
-    var query = new Parse.Query(tag);
-    var name = request.params.name;
-    console.log("Before Replace : " + request.params["name"]);
-  });
