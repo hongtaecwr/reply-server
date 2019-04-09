@@ -122,7 +122,6 @@ Parse.Cloud.define('findBestReplyMsg', function (request, response) {
             "replyMsg": ""
           });
         } else {
-          //console.log("all msgResponse:" + JSON.stringify(msgResponse));
           contents = msgResponse[0].get("replyMsg");
           //console.log("contents:" + contents);
           var replyCount = contents.length;
@@ -340,10 +339,6 @@ Parse.Cloud.define('addSynonym', function (request, response) {
           var synOBJ = new SYN();
           synOBJ.set("common_word", CommonwordFromUser);
           synOBJ.set("synonym_word", SynonymwordFromUser);
-          var msgChar = CommonwordFromUser.join('');
-          var wc = wordcut.cut(msgChar)
-          let array = wc.split('|');
-          synOBJ.set("synArray", array);
           synOBJ.save(null, {
             success: function (success) {
               response.success({
@@ -360,10 +355,6 @@ Parse.Cloud.define('addSynonym', function (request, response) {
           var synOBJ = new SYN();
           synOBJ = synResponse[0];
           for (var i = 0; i < CommonwordFromUser.length; i++) {
-            var msgChar = CommonwordFromUser[i];
-            var wc = wordcut.cut(msgChar)
-            let arr = wc.split('|');
-            synOBJ.addUnique("synArray", arr);
             synOBJ.addUnique("common_word", CommonwordFromUser[i]);
           }
           for (var i = 0; i < SynonymwordFromUser.length; i++) {
@@ -391,31 +382,31 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-/* Parse.Cloud.define('querySyn', function (request, response) {
+Parse.Cloud.define('querySyn', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var query2 = new Parse.Query(SYN);
   var msgFromUser = req.params.msg;
-  if (msgFromUser != '' || msgFromUser != null){
-    query2
+  /////////Synonym For////////////////
+  if (msgFromUser != '' || msgFromUser != null) {
+    query2.equalTo("common_word", msgFromUser);
+    query2.limit(appQueryLimit);
+    query2.find({
+      success: function (msgResponse) {
+        var contents = [];
+        for (var i = 0; i < msgResponse.length; i++) {
+          contents.push(msgResponse[i].get("synonym_word"))
+        }
+      }
+    })
   }
-
+  //////////////////////
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
     query.equalTo("msg", msgFromUser);
   }
 }
-) */
+)
 ///////////////////////
-Parse.Cloud.define('querySyn', function (request, response) {
-  var SYN = Parse.Object.extend("Synonym");
-  var query = new Parse.Query(SYN);
-  query.equalTo("common_word", "กิน");
-  query.limit(appQueryLimit);
-  query.find().then(function (result) {
-  console.log(result);
-  })
-});
-  ///////////////////////
