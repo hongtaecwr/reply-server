@@ -391,14 +391,31 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-Parse.Cloud.define('querySyn', function (request, response) {
+/* Parse.Cloud.define('querySyn', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var query2 = new Parse.Query(SYN);
   var msgFromUser = req.params.msg;
-  if (msgFromUser != '' || msgFromUser != null) {
+  if (msgFromUser != '' || msgFromUser != null){
     query2
   }
-});
+
+  if (msgFromUser == null) {
+    response.error("request null values");
+  } else {
+    query.equalTo("msg", msgFromUser);
+  }
+}
+) */
 ///////////////////////
+Parse.Cloud.define('querySyn', function (request, response) {
+  var SYN = Parse.Object.extend("Synonym");
+  var query = new Parse.Query(SYN);
+  query.equalTo("common_word", "กิน");
+  query.limit(appQueryLimit);
+  query.find().then(function (result) {
+  console.log(result);
+  })
+});
+  ///////////////////////
