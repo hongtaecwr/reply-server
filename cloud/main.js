@@ -339,6 +339,10 @@ Parse.Cloud.define('addSynonym', function (request, response) {
           var synOBJ = new SYN();
           synOBJ.set("common_word", CommonwordFromUser);
           synOBJ.set("synonym_word", SynonymwordFromUser);
+          var msgChar = CommonwordFromUser.join('');
+          var wc = wordcut.cut(msgChar)
+          let array = wc.split('|');
+          synOBJ.set("synArray", array);
           synOBJ.save(null, {
             success: function (success) {
               response.success({
@@ -355,6 +359,10 @@ Parse.Cloud.define('addSynonym', function (request, response) {
           var synOBJ = new SYN();
           synOBJ = synResponse[0];
           for (var i = 0; i < CommonwordFromUser.length; i++) {
+            var msgChar = CommonwordFromUser[i];
+            var wc = wordcut.cut(msgChar)
+            let arr = wc.split('|');
+            synOBJ.addUnique("synArray", arr);
             synOBJ.addUnique("common_word", CommonwordFromUser[i]);
           }
           for (var i = 0; i < SynonymwordFromUser.length; i++) {
