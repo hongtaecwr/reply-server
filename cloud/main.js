@@ -404,7 +404,7 @@ Parse.Cloud.define('querySyn', function (request, response) {
       success: function (msgResponse) {
         var contents = [];
         for (var i = 0; i < msgResponse.length; i++) {
-          contents.push(msgResponse[i].get("synonym_word"))
+          contents.push(msgResponse[i].get(""))
         }
       }
     })
