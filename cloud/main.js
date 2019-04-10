@@ -36,8 +36,7 @@ Parse.Cloud.define('getReplyMsg', function (request, response) {
 function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
-  var test1 = request.params.msg;
-  var msgFromUser = wordcut.cut(test1);
+  var msgFromUser = request.params.msg;
   //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
     msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
