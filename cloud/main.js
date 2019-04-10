@@ -408,7 +408,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
         }
       }
     })
-  } */
+  }
   //////////////////////
   if (msgFromUser == null) {
     response.error("request null values");
@@ -416,5 +416,5 @@ Parse.Cloud.define('addSynonym', function (request, response) {
     query.equalTo("msg", msgFromUser);
   }
 }
-)
+) */
 ///////////////////////
