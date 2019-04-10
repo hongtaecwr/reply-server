@@ -38,7 +38,6 @@ function getReplyMsg(request, response) {
   var query = new Parse.Query(MSG);
   var test1 = request.params.msg;
   var msgFromUser = wordcut.cut(test1);
-  console.log(msgFromUser);
   //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
     msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
@@ -58,7 +57,7 @@ function getReplyMsg(request, response) {
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
-    query.equalTo("msg", msgFromUser);
+    query.equalTo("wordsArray", msgFromUser);
     query.limit(appQueryLimit);
     query.find({
       success: function (msgResponse) {
