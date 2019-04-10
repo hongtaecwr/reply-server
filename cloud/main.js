@@ -390,7 +390,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-Parse.Cloud.define('querySyn', function (request, response) {
+/* Parse.Cloud.define('querySyn', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
@@ -404,11 +404,11 @@ Parse.Cloud.define('querySyn', function (request, response) {
       success: function (msgResponse) {
         var contents = [];
         for (var i = 0; i < msgResponse.length; i++) {
-          contents.push(msgResponse[i].get("syno"))
+          contents.push(msgResponse[i].get(""))
         }
       }
     })
-  }
+  } */
   //////////////////////
   if (msgFromUser == null) {
     response.error("request null values");
