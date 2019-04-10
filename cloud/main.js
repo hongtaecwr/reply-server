@@ -403,3 +403,4 @@ function querySyn (request, response) {
   console.log("names");
 };
 //////////////////////
+console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง สุนัขคือหมา"));
