@@ -21,8 +21,8 @@ Parse.Cloud.define('testMsg', function (req, res) {
   });
 });
 
-Parse.Cloud.define('querySyn', function (request, response) {
-  querySyn(request, {
+Parse.Cloud.define('getReplyMsg', function (request, response) {
+  getReplyMsg(request, {
     success: function (result) {
       response.success(result);
     },
