@@ -9,16 +9,7 @@ console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง
 
 
 Parse.Cloud.define('hello', function (req, res) {
-  var SYN = Parse.Object.extend("Synonym");
-  var query = new Parse.Query(SYN);
-  query.containedIn("common_word", "กิน");
-  query.find().then(function (users) {
-    for (var i = 0; i < users.length; i++) {
-      names.push(users[i].get("synonym_word"));
-    }
-    names.sort();
-  })
-  res.success(names);
+  res.success('Hi');
 });
 
 Parse.Cloud.define('testMsg', function (req, res) {
