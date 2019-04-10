@@ -390,31 +390,16 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-/* Parse.Cloud.define('querySyn', function (request, response) {
+Parse.Cloud.define('querySyn', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
-  var MSG = Parse.Object.extend("Message");
-  var query = new Parse.Query(MSG);
-  var query2 = new Parse.Query(SYN);
-  var msgFromUser = req.params.msg;
-  /////////Synonym For////////////////
-  if (msgFromUser != '' || msgFromUser != null) {
-    query2.equalTo("common_word", msgFromUser);
-    query2.limit(appQueryLimit);
-    query2.find({
-      success: function (msgResponse) {
-        var contents = [];
-        for (var i = 0; i < msgResponse.length; i++) {
-          contents.push(msgResponse[i].get(""))
-        }
-      }
-    })
-  }
-  //////////////////////
-  if (msgFromUser == null) {
-    response.error("request null values");
-  } else {
-    query.equalTo("msg", msgFromUser);
-  }
-}
-) */
-///////////////////////
+  var query = new Parse.Query(SYN);
+  query.containedIn("objectId", common_word);
+query.find().then(function(users) {
+   for(var i=0; i < users.length; i++) {
+       names.push(users[i].get("synonym_word"));
+   }
+    names.sort();
+    console.log(names);
+})
+});
+//////////////////////
