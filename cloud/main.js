@@ -9,17 +9,7 @@ console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง
 
 
 Parse.Cloud.define('hello', function (req, res) {
-  var query = new parse.query(Synonym);
-query.find({
-  success: function(results) {
-    res.success(query);
-    // results is an array of parse.object.
-  },
-
-  error: function(error) {
-    // error is an instance of parse.error.
-  }
-});
+  res.success('Hi');
 });
 
 Parse.Cloud.define('testMsg', function (req, res) {
