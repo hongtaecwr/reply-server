@@ -39,6 +39,7 @@ function getReplyMsg(request, response) {
   var test1 = request.params.msg;
   var wc = wordcut.cut(test1);
   var msgFromUser = wc.split('|');
+  console.log(msgFromUser);
   //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
     msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
