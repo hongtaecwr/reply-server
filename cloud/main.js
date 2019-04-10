@@ -56,7 +56,7 @@ function getReplyMsg(request, response) {
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
-    query.equalTo("wordsArray", msgFromUser);
+    query.equalTo("msg", msgFromUser);
     query.limit(appQueryLimit);
     query.find({
       success: function (msgResponse) {
