@@ -21,8 +21,8 @@ Parse.Cloud.define('testMsg', function (req, res) {
   });
 });
 
-Parse.Cloud.define('getReplyMsg', function (request, response) {
-  getReplyMsg(request, {
+Parse.Cloud.define('querySyn', function (request, response) {
+  querySyn(request, {
     success: function (result) {
       response.success(result);
     },
@@ -390,7 +390,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-Parse.Cloud.define('querySyn', function (request, response) {
+function querySyn (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
   query.containedIn("common_word", "กิน");
@@ -399,7 +399,7 @@ Parse.Cloud.define('querySyn', function (request, response) {
       names.push(users[i].get("synonym_word"));
     }
     names.sort();
-    console.log(names);
   })
-});
+  console.log("names");
+};
 //////////////////////
