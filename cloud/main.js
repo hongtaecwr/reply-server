@@ -38,15 +38,12 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
+  var 
   var regex = /ทดสอบ/g;
   var synonym_word = 'เทส';
   //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
     msgFromUser = msgFromUser.replace(regex, synonym_word);
-
-
-
-
     /*     msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
     msgFromUser = msgFromUser.replace(/บาวหวาน/g, 'เบาหวาน');
     msgFromUser = msgFromUser.replace(/่เป็นหวัด/g, 'มีไข้');
