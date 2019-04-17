@@ -38,8 +38,8 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  var regex = /หัว/g;
-  var synonym_word = 'ศีรษะ';
+  var regex = /ทดสอบ/g;
+  var synonym_word = 'เทส';
   //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
     msgFromUser = msgFromUser.replace(regex, synonym_word);
