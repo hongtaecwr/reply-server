@@ -3,6 +3,7 @@ var appQueryLimitMin = 10000;
 var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
+var regex = require("regex");
 
 wordcut.init('cloud/customdict.txt', true);
 console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง สุนัขคือหมา"));
@@ -37,9 +38,16 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
+  var regex = /หัว/g;
+  var synonym_word = 'ศีรษะ';
   //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
-    msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
+    msgFromUser = msgFromUser.replace(regex, synonym_word);
+
+
+
+
+    /*     msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
     msgFromUser = msgFromUser.replace(/บาวหวาน/g, 'เบาหวาน');
     msgFromUser = msgFromUser.replace(/่เป็นหวัด/g, 'มีไข้');
     msgFromUser = msgFromUser.replace(/ฉี่/g, 'ปัสสาวะ');
@@ -48,7 +56,7 @@ function getReplyMsg(request, response) {
     msgFromUser = msgFromUser.replace(/จะอ้วก/g, 'คลื่นไส้');
     msgFromUser = msgFromUser.replace(/ปวดหัว/g, 'ปวดศีรษะ');
     msgFromUser = msgFromUser.replace(/หัว/g, 'ศีรษะ');
-    msgFromUser = msgFromUser.replace(/เสลด/g, 'เสมหะ');
+    msgFromUser = msgFromUser.replace(/เสลด/g, 'เสมหะ'); */
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
