@@ -38,7 +38,6 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  var 
   var regex = /ทดสอบ/g;
   var synonym_word = 'เทส';
   //////Synonym Process//////
