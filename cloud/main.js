@@ -300,7 +300,7 @@ Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
           var target = matches.bestMatch.target;
           //console.log("result bestMatch target:" + target);
 
-          findBestReplyMsg({
+          getReplyMsg({
             params: {
               msg: target
             }
