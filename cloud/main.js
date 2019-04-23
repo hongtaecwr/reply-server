@@ -63,7 +63,7 @@ function getReplyMsg(request, response) {
     var wc = wordcut.cut(msgFromUser)
     let arr = wc.split('|');
     var msgChar = arr.join('.*');
-    
+
     query.matches("msg", '.*' + msgChar + '.*');
     query.limit(appQueryLimit);
     query.find({
@@ -106,7 +106,7 @@ function getReplyMsg(request, response) {
   }
 }
 ////////////////////////////
-Parse.Cloud.define('findBestReplyMsg', function (request, response) {
+/* Parse.Cloud.define('findBestReplyMsg', function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
@@ -158,7 +158,7 @@ Parse.Cloud.define('findBestReplyMsg', function (request, response) {
       }
     });
   }
-});
+}); */
 
 //////////////////////////////
 Parse.Cloud.define('botTraining', function (request, response) {
