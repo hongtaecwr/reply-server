@@ -106,61 +106,6 @@ function getReplyMsg(request, response) {
   }
 }
 ////////////////////////////
-/* Parse.Cloud.define('findBestReplyMsg', function (request, response) {
-  var MSG = Parse.Object.extend("Message");
-  var query = new Parse.Query(MSG);
-  var msgFromUser = request.params.msg;
-  //console.log("request:" + request.params["msg"]);
-  //console.log("msg from user:" + msgFromUser);
-  if (msgFromUser == null) {
-    response.error("request null values");
-  } else {
-    var wc = wordcut.cut(msgFromUser)
-    let arr = wc.split('|');
-    var msgChar = arr.join('.*');
-
-    query.matches("msg", '.*' + msgChar + '.*');
-    query.limit(appQueryLimit);
-    query.find({
-      success: function (msgResponse) {
-        var contents = [];
-        if (msgResponse.length == 0) {
-          response.success({
-            "msg": msgFromUser,
-            "replyMsg": ""
-          });
-        } else {
-          contents = msgResponse[0].get("replyMsg");
-          //console.log("contents:" + contents);
-          var replyCount = contents.length;
-          //console.log("replyCount:" + replyCount);
-          if (replyCount == 0) {
-            response.success({
-              "msg": msgFromUser,
-              "replyMsg": ""
-            });
-            //console.log("resultReplyMsg:" + "0");
-          } else {
-            var randomIndex = Math.floor((Math.random() * replyCount) + 0);
-            //console.log("randomIndex:" + randomIndex);
-            var resultReplyMsg = contents[randomIndex].toString();
-            response.success({
-              "msg": msgFromUser,
-              "replyMsg": resultReplyMsg
-            });
-            //console.log("resultReplyMsg:" + resultReplyMsg);
-          }
-        }
-        //response.success(msgResponse);
-      },
-      error: function () {
-        response.error("get replyMsg failed");
-      }
-    });
-  }
-}); */
-
-//////////////////////////////
 Parse.Cloud.define('botTraining', function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var msgFromUser = request.params.msg;
@@ -401,13 +346,14 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 Parse.Cloud.define('getSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
-  query.containedIn("common_word", "กิน");
-  query.find().then(function (users) {
-    for (var i = 0; i < users.length; i++) {
-      names.push(users[i].get("synonym_word"));
+  query.first({
+    success: function(object) {
+      response.success(object);
+    },
+    error: function(error) {
+      response.error(error);
     }
-    names.sort();
-  })
-  console.log(names);
+  });
 });
+  
 /////////////////////////
