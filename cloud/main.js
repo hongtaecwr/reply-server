@@ -398,7 +398,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-function querySyn (request, response) {
+Parse.Cloud.define('getSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
   query.containedIn("common_word", "กิน");
@@ -409,5 +409,5 @@ function querySyn (request, response) {
     names.sort();
   })
   console.log("names");
-};
-//////////////////////
+});
+/////////////////////////
