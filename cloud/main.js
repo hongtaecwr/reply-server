@@ -408,6 +408,6 @@ Parse.Cloud.define('getSynonym', function (request, response) {
     }
     names.sort();
   })
-  console.log("names");
+  console.log(names);
 });
 /////////////////////////
