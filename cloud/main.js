@@ -346,7 +346,8 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 Parse.Cloud.define('getSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
-  query.first({
+  query.equalTo("synonym_word","รับประทาน")
+  query.find({
     success: function(object) {
       response.success(object);
     },
