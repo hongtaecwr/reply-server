@@ -60,7 +60,11 @@ function getReplyMsg(request, response) {
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
-    query.equalTo("msg", msgFromUser);
+    var wc = wordcut.cut(msgFromUser)
+    let arr = wc.split('|');
+    var msgChar = arr.join('.*');
+    
+    query.matches("msg", '.*' + msgChar + '.*');
     query.limit(appQueryLimit);
     query.find({
       success: function (msgResponse) {
@@ -156,7 +160,7 @@ Parse.Cloud.define('findBestReplyMsg', function (request, response) {
   }
 });
 
-
+//////////////////////////////
 Parse.Cloud.define('botTraining', function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var msgFromUser = request.params.msg;
