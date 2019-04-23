@@ -101,7 +101,7 @@ function getReplyMsg(request, response) {
     });
   }
 }
-
+////////////////////////////
 Parse.Cloud.define('findBestReplyMsg', function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
@@ -295,12 +295,12 @@ Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
             });
           });
           var matches = stringSimilarity.findBestMatch(msgFromUser, msgArray);
-          console.log("matches:" + JSON.stringify(matches) + "\n");
+          console.log("matches:" + JSON.stringify(matches));
           console.log("best matches:" + JSON.stringify(matches.bestMatch));
           var target = matches.bestMatch.target;
           //console.log("result bestMatch target:" + target);
 
-          getReplyMsg({
+          findBestReplyMsg({
             params: {
               msg: target
             }
