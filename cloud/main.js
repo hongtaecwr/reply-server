@@ -367,7 +367,7 @@ Parse.Cloud.define('getSynonym', function (request, response) {
   query.find({
     success: function (result) {
       test = result.get("synonym_word");
-      response.success(test);
+      console.log(test);
     },
     error: function (error) {
       response.error(error);
