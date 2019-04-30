@@ -362,7 +362,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 ///////////////////////
 Parse.Cloud.define('getSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
-  var query = new Parse.Query(SYN);
+  var query = new Parse.Query(SYN.common_word);
   query.matches("common_word", "กิน")
   query.distinct("synonym_word")
   query.find({
