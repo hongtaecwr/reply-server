@@ -366,7 +366,7 @@ Parse.Cloud.define('getSynonym', function (request, response) {
   query.matches("common_word", "กิน")
   query.find({
     success: function (result) {
-      response.success("synonym");
+      response.success(result.get("objectId"));
     },
     error: function (error) {
       response.error(error);
