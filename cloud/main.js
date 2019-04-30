@@ -38,11 +38,28 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  var regex = /ทดสอบ/g;
+  /////////////Query ตัวแปร common//////////////////
+  var SYN = Parse.Object.extend("Synonym");
+  var query1 = new Parse.Query(SYN);
+  query1.equalTo("common_word",msgFromUser)
+  query1.find({
+    success: function(object) {
+      response.success(object);
+    },
+    error: function(error) {
+      response.error(error);
+    }
+  });
+  //////////////////////////////////////////
+  /////////////Query Synonym word///////////
+
+  //////////////////////////////////////////
+  var a = new RegExp("/"+object+"/",'g');
   var synonym_word = 'เทส';
   //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
     msgFromUser = msgFromUser.replace(regex, synonym_word);
+    
     /*     msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
     msgFromUser = msgFromUser.replace(/บาวหวาน/g, 'เบาหวาน');
     msgFromUser = msgFromUser.replace(/่เป็นหวัด/g, 'มีไข้');
@@ -346,10 +363,10 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 Parse.Cloud.define('getSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
-  query.equalTo("synonym_word","รับประทาน")
+  query.equalTo("common_word","กิน")
   query.find({
     success: function(object) {
-      response.success(object);
+      response.success(object.get("synonym_word"));
     },
     error: function(error) {
       response.error(error);
