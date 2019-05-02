@@ -54,11 +54,11 @@ function getReplyMsg(request, response) {
   /////////////Query Synonym word///////////
 
   //////////////////////////////////////////
-  var a = new RegExp("/" + object + "/", 'g');
-  var synonym_word = 'เทส';
+  /* var a = new RegExp("/" + object + "/", 'g');
+  var synonym_word = 'เทส'; */
   //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
-    msgFromUser = msgFromUser.replace(regex, synonym_word);
+    msgFromUser = msgFromUser.replace(/Hongtae/g, 'synonym');
 
     /*     msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
     msgFromUser = msgFromUser.replace(/บาวหวาน/g, 'เบาหวาน');
