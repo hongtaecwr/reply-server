@@ -39,23 +39,23 @@ function getReplyMsg(request, response) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   /////////////Query ตัวแปร common//////////////////
- /*  var SYN = Parse.Object.extend("Synonym");
-  var query1 = new Parse.Query(SYN);
-  query1.equalTo("common_word", msgFromUser)
-  query1.find({
-    success: function (object) {
-      response.success(object.synonym_word);
-    },
-    error: function (error) {
-      response.error(error);
-    }
-  });
-  if (msgFromUser != '' || msgFromUser != null) {
-    msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
-  }
-  console.log("Before Replace : " + request.params["msg"]);
-  console.log("After Replace : " + msgFromUser);
-   */
+  /*  var SYN = Parse.Object.extend("Synonym");
+   var query1 = new Parse.Query(SYN);
+   query1.equalTo("common_word", msgFromUser)
+   query1.find({
+     success: function (object) {
+       response.success(object.synonym_word);
+     },
+     error: function (error) {
+       response.error(error);
+     }
+   });
+   if (msgFromUser != '' || msgFromUser != null) {
+     msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
+   }
+   console.log("Before Replace : " + request.params["msg"]);
+   console.log("After Replace : " + msgFromUser);
+    */
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
@@ -246,15 +246,12 @@ Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
           console.log("matches:" + JSON.stringify(matches));
           console.log("best matches:" + JSON.stringify(matches.bestMatch));
           var target = matches.bestMatch.target;
-          //console.log("result bestMatch target:" + target);
-
           getReplyMsg({
             params: {
               msg: target
             }
           }, {
               success: function (result) {
-                //console.log("result:" + JSON.stringify(result));
                 response.success({
                   "msg": msgFromUser,
                   "replyMsg": result.replyMsg
@@ -265,7 +262,6 @@ Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
               }
             });
         }
-        //response.success(msgResponse);
       },
       error: function () {
         response.error("get replyMsg failed");
@@ -345,23 +341,22 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 Parse.Cloud.define('getSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
-  var msgFromUser = request.params.msg;
-  var wc = wordcut.cut(msgFromUser);
-  let arr = wc.split('|');
-  var msgChar = arr.join('.*');
-  console.log(msgChar);
-  query.equalTo("common_word", msgChar)
   query.find({
-    success: function(result){
-      var words = "";
-      if(result.length != 0){
-        words = result[0].get("synonym_word");
-        response.success(words);
-        return words;
+    success: function (result) {
+      var common_word = "";
+      var synonym_word = "";
+      if (result.length != 0) {
+        common_word = result[0].get("common_word");
+        synonym_word = result[0].get("synonym_word");
+
+        response.success({
+          "common_word": common_word,
+          "synonym_word": synonym_word
+        });
       }
     },
     error: function () {
-      response.error("get replyMsg failed");
+      response.error("failed");
     }
   });
 });
