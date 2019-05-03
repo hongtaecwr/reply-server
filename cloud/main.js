@@ -351,9 +351,10 @@ Parse.Cloud.define('getSynonym', function (request, response) {
         synonym_word = result[i].get("synonym_word");
       }
       strtest = strtest.replace(new RegExp(common_word, 'g'),synonym_word);
+      console.log(strtest);
         response.success({
-          "common_word": common_word[i],
-          "synonym_word": synonym_word[i]
+          "common_word": common_word,
+          "synonym_word": synonym_word
         }); 
     },
     error: function () {
