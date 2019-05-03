@@ -39,41 +39,23 @@ function getReplyMsg(request, response) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   /////////////Query ตัวแปร common//////////////////
-/*   var SYN = Parse.Object.extend("Synonym");
+  var SYN = Parse.Object.extend("Synonym");
   var query1 = new Parse.Query(SYN);
   query1.equalTo("common_word", msgFromUser)
   query1.find({
     success: function (object) {
-      response.success(object);
+      response.success(object.synonym_word);
     },
     error: function (error) {
       response.error(error);
     }
   });
-  //////////////////////////////////////////
-  /////////////Query Synonym word///////////
-
-  //////////////////////////////////////////
-  var a = new RegExp("/" + object + "/", 'g');
-  var synonym_word = 'เทส'; */
-  //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
-    msgFromUser = msgFromUser.replace(/เต้/g, 'test');
-
-    /*     msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
-    msgFromUser = msgFromUser.replace(/บาวหวาน/g, 'เบาหวาน');
-    msgFromUser = msgFromUser.replace(/่เป็นหวัด/g, 'มีไข้');
-    msgFromUser = msgFromUser.replace(/ฉี่/g, 'ปัสสาวะ');
-    msgFromUser = msgFromUser.replace(/ขี้มูก/g, 'น้ำมูก');
-    msgFromUser = msgFromUser.replace(/อ้วก/g, 'อาเจียน');
-    msgFromUser = msgFromUser.replace(/จะอ้วก/g, 'คลื่นไส้');
-    msgFromUser = msgFromUser.replace(/ปวดหัว/g, 'ปวดศีรษะ');
-    msgFromUser = msgFromUser.replace(/หัว/g, 'ศีรษะ');
-    msgFromUser = msgFromUser.replace(/เสลด/g, 'เสมหะ'); */
+    msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
-  /////End of Synonym Process//////
+  
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
@@ -363,24 +345,15 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 Parse.Cloud.define('getSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
-  query.equalTo("common_word", "กิน")
-  query.first({
-    success: function (result) {
-      var max = result.get("synonym_word");
-      console.log(result);
-    },
-    error: function () {
-    },
-
-  })
+  query.equalTo("common_word", "change")
   query.find({
     success: function (result) {
-      console.log(result);
+      response.success(result)
     },
     error: function (error) {
-      response.error(error);
-    }
-  });
+      response.error(error)
+    },
+  })
 });
 
 /////////////////////////
