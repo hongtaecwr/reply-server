@@ -351,7 +351,8 @@ Parse.Cloud.define('getSynonym', function (request, response) {
   for (let i = 0; i < results.length; ++i) {
     sum += results[i].get("synonym_word");
   }
-  console.log('ผลลัพธ์' + sum);
+  console.log('ผลลัพธ์' + results);
+  console.log('msg');
   return sum;
 });
 
