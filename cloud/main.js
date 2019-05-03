@@ -38,24 +38,12 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  /////////////Query ตัวแปร common//////////////////
-  /*  var SYN = Parse.Object.extend("Synonym");
-   var query1 = new Parse.Query(SYN);
-   query1.equalTo("common_word", msgFromUser)
-   query1.find({
-     success: function (object) {
-       response.success(object.synonym_word);
-     },
-     error: function (error) {
-       response.error(error);
-     }
-   });
-   if (msgFromUser != '' || msgFromUser != null) {
+/*    if (msgFromUser != '' || msgFromUser != null) {
      msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
    }
    console.log("Before Replace : " + request.params["msg"]);
-   console.log("After Replace : " + msgFromUser);
-    */
+   console.log("After Replace : " + msgFromUser); */
+
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
