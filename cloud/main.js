@@ -350,7 +350,7 @@ Parse.Cloud.define('getSynonym', function (request, response) {
   for (let i = 0; i < results.length; ++i) {
     results[i].get("synonym_word");
   }
+  console.log(results);
   return results;
 });
-console.log(results)
 /////////////////////////
