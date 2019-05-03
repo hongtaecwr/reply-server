@@ -348,12 +348,11 @@ Parse.Cloud.define('getSynonym', function (request, response) {
       for (var i = 0; i < result.length; i++) {
         common_word = result[i].get("common_word");
         synonym_word = result[i].get("synonym_word");
-
-        response.success({
-          "common_word": common_word,
-          "synonym_word": synonym_word
-        });
       }
+        response.success({
+          "common_word": common_word[i],
+          "synonym_word": synonym_word[i]
+        }); 
     },
     error: function () {
       response.error("failed");
