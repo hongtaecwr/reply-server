@@ -347,8 +347,9 @@ Parse.Cloud.define('getSynonym', function (request, response) {
   var query = new Parse.Query(SYN);
   query.equalTo("common_word", request.params.msg)
   const results = query.find();
+  var word ="";
   for (let i = 0; i < results.length; ++i) {
-    results[i].get("synonym_word");
+    word = results[i].get("synonym_word");
   }
   console.log(results);
   return results;
