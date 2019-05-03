@@ -341,10 +341,7 @@ Parse.Cloud.define('getSynonym', function (request, response) {
       }
       
       console.log(strtest);
-        response.success({
-          "common_word": common_word,
-          "synonym_word": synonym_word
-        }); 
+        response.success(strtest); 
     },
     error: function () {
       response.error("failed");
