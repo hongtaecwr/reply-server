@@ -345,7 +345,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 Parse.Cloud.define('getSynonym', async (request) => {
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
-  query.equalTo("common_word", "change")
+  query.equalTo("common_word", request.params.msg)
   const results = await query.find();
   let sum = 0;
   for (let i = 0; i < results.length; ++i) {
