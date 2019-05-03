@@ -39,7 +39,7 @@ function getReplyMsg(request, response) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   /////////////Query ตัวแปร common//////////////////
-  var SYN = Parse.Object.extend("Synonym");
+ /*  var SYN = Parse.Object.extend("Synonym");
   var query1 = new Parse.Query(SYN);
   query1.equalTo("common_word", msgFromUser)
   query1.find({
@@ -55,7 +55,7 @@ function getReplyMsg(request, response) {
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
-  
+   */
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
