@@ -349,6 +349,7 @@ Parse.Cloud.define('getSynonym', function (request, response) {
   var wc = wordcut.cut(msgFromUser);
   let arr = wc.split('|');
   var msgChar = arr.join('.*');
+  console.log(msgChar);
   query.equalTo("common_word", msgChar)
   query.find({
     success: function(result){
