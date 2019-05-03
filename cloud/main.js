@@ -352,7 +352,7 @@ Parse.Cloud.define('getSynonym', function (request, response) {
     sum = results[i].get("synonym_word");
   }
   console.log(sum);
-  return sum;
+  return sum / results.length;
 });
 
 /////////////////////////
