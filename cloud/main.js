@@ -342,16 +342,16 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-Parse.Cloud.define('getSynonym', async (request) => {
+Parse.Cloud.define('getSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
   query.equalTo("common_word", request.params.msg)
-  const results = await query.find();
+  const results = query.find();
   let sum = 0;
   for (let i = 0; i < results.length; ++i) {
     sum += results[i].get("synonym_word");
   }
-  console.log(sum);
+  console.log('ผลลัพธ์' + sum);
   return sum;
 });
 
