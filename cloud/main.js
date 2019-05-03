@@ -39,7 +39,7 @@ function getReplyMsg(request, response) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   /////////////Query ตัวแปร common//////////////////
-  var SYN = Parse.Object.extend("Synonym");
+/*   var SYN = Parse.Object.extend("Synonym");
   var query1 = new Parse.Query(SYN);
   query1.equalTo("common_word", msgFromUser)
   query1.find({
@@ -55,10 +55,10 @@ function getReplyMsg(request, response) {
 
   //////////////////////////////////////////
   var a = new RegExp("/" + object + "/", 'g');
-  var synonym_word = 'เทส';
+  var synonym_word = 'เทส'; */
   //////Synonym Process//////
   if (msgFromUser != '' || msgFromUser != null) {
-    msgFromUser = msgFromUser.replace(a, synonym_word);
+    msgFromUser = msgFromUser.replace(/เต้/g, 'test');
 
     /*     msgFromUser = msgFromUser.replace(/กระเพรา/g, 'กะเพรา');
     msgFromUser = msgFromUser.replace(/บาวหวาน/g, 'เบาหวาน');
