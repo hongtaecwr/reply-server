@@ -353,5 +353,5 @@ Parse.Cloud.define('getSynonym', function (request, response) {
   }
   return sum / results.length;
 });
-
+console.log(sum + results)
 /////////////////////////
