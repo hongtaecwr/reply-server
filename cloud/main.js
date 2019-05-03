@@ -339,7 +339,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 
 ///////////////////////
 Parse.Cloud.define('getSynonym', function (request, response) {
-  var strtest = ("ฉันรู้สึกคันตีนมาก ตีนฉันเป็นอะไรกันนะ หรือว่าจะป่วย")
+  var strtest = ("ฉันรู้สึกคันตีนมาก ตีนฉันเป็นอะไรกันนะ หรือว่าจะไม่สบาย")
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
   query.find({
