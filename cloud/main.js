@@ -352,11 +352,13 @@ Parse.Cloud.define('getSynonym', function (request, response) {
       if(result.length != 0){
         words = result[0].get("synonym_word");
         response.success(words);
+        return words;
       }
     },
     error: function () {
       response.error("get replyMsg failed");
     }
   });
+console.log(words);
 });
 /////////////////////////
