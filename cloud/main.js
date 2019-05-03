@@ -358,11 +358,5 @@ Parse.Cloud.define('getSynonym', function (request, response) {
       response.error("get replyMsg failed");
     }
   });
-  var word ="";
-  for (let i = 0; i < results.length; ++i) {
-    word = results[i].get("synonym_word");
-  }
-  console.log(results);
-  return results;
 });
 /////////////////////////
