@@ -52,10 +52,27 @@ function getReplyMsg(request, response, msgFromUser) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   if (msgFromUser != '' || msgFromUser != null) {
-    getSynonym(msgFromUser);
-   }
-   console.log("Before Replace : " + request.params["msg"]);
-   console.log("After Replace : " + msgFromUser);
+    var SYN = Parse.Object.extend("Synonym");
+    var query = new Parse.Query(SYN);
+    query.find({
+      success: function (result) {
+        var common_word = "";
+        var synonym_word = "";
+        for (var i = 0; i < result.length; i++) {
+          common_word = result[i].get("common_word");
+          synonym_word = result[i].get("synonym_word");
+          msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
+        }
+        console.log(msgFromUser);
+        response.success("success");
+      },
+      error: function () {
+        response.error("failed");
+      }
+    })
+  }
+  console.log("Before Replace : " + request.params["msg"]);
+  console.log("After Replace : " + msgFromUser);
 
   if (msgFromUser == null) {
     response.error("request null values");
@@ -350,11 +367,11 @@ function getSynonym(request, response, msgFromUser) {
       for (var i = 0; i < result.length; i++) {
         common_word = result[i].get("common_word");
         synonym_word = result[i].get("synonym_word");
-        strtest = strtest.replace(new RegExp(common_word, 'g'),synonym_word);
+        strtest = strtest.replace(new RegExp(common_word, 'g'), synonym_word);
       }
-      
+
       console.log(strtest);
-        response.success(strtest); 
+      response.success(strtest);
     },
     error: function () {
       response.error("failed");
