@@ -38,12 +38,24 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-/*    if (msgFromUser != '' || msgFromUser != null) {
-     msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
-   }
-   console.log("Before Replace : " + request.params["msg"]);
-   console.log("After Replace : " + msgFromUser); */
-
+  /////////////Query ตัวแปร common//////////////////
+  var SYN = Parse.Object.extend("Synonym");
+  var query1 = new Parse.Query(SYN);
+  query1.equalTo("common_word", msgFromUser)
+  query1.find({
+    success: function (object) {
+      response.success(object.synonym_word);
+    },
+    error: function (error) {
+      response.error(error);
+    }
+  });
+  if (msgFromUser != '' || msgFromUser != null) {
+    msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
+  }
+  console.log("Before Replace : " + request.params["msg"]);
+  console.log("After Replace : " + msgFromUser);
+  
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
@@ -234,12 +246,15 @@ Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
           console.log("matches:" + JSON.stringify(matches));
           console.log("best matches:" + JSON.stringify(matches.bestMatch));
           var target = matches.bestMatch.target;
+          //console.log("result bestMatch target:" + target);
+
           getReplyMsg({
             params: {
               msg: target
             }
           }, {
               success: function (result) {
+                //console.log("result:" + JSON.stringify(result));
                 response.success({
                   "msg": msgFromUser,
                   "replyMsg": result.replyMsg
@@ -250,6 +265,7 @@ Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
               }
             });
         }
+        //response.success(msgResponse);
       },
       error: function () {
         response.error("get replyMsg failed");
@@ -344,8 +360,9 @@ Parse.Cloud.define('getSynonym', function (request, response) {
         response.success(strtest); 
     },
     error: function () {
-      response.error("failedd");
+      response.error("failed");
     }
   });
 });
+
 /////////////////////////
