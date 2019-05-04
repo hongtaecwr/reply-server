@@ -51,23 +51,21 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  var common_word = "";
-  var synonym_word = "";
-
   if (msgFromUser != '' || msgFromUser != null) {
     var SYN = Parse.Object.extend("Synonym");
     var query1 = new Parse.Query(SYN);
     query1.find({
       success: function (result) {
+        var common_word = "";
+        var synonym_word = "";
         for (var i = 0; i < result.length; i++) {
           common_word = result[i].get("common_word");
           synonym_word = result[i].get("synonym_word");
           msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
         }
-        response.success(msgFromUser)
+        response.success(msgFromUser);
       }
     });
-    msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
