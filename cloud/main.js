@@ -344,7 +344,7 @@ Parse.Cloud.define('getSynonym', function (request, response) {
         response.success(strtest); 
     },
     error: function () {
-      response.error("failed");
+      response.error("failedd");
     }
   });
 });
