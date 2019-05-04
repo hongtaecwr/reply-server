@@ -67,7 +67,6 @@ function getReplyMsg(request, response) {
       }
     });
   }
-  test();
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
 
