@@ -4,6 +4,7 @@ var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
 var regex = require("regex");
+var request = require('request');
 var msgFromUser = request.params.msg;
 
 wordcut.init('cloud/customdict.txt', true);
