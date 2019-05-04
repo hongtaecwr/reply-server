@@ -4,6 +4,7 @@ var wordcut = require("wordcut");
 var _ = require('underscore');
 var stringSimilarity = require('string-similarity');
 var regex = require("regex");
+var msgFromUser = request.params.msg;
 
 wordcut.init('cloud/customdict.txt', true);
 console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง สุนัขคือหมา"));
@@ -49,7 +50,6 @@ Parse.Cloud.define('getSynonym', function (request, response) {
 function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
-  var msgFromUser = request.params.msg;
   if (msgFromUser != '' || msgFromUser != null) {
     getSynonym(msgFromUser);
    }
