@@ -70,6 +70,7 @@ function getReplyMsg(request, response) {
         response.error("failed");
       }
     });
+    msgFromUser();
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
