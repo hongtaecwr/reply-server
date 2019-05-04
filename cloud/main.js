@@ -47,14 +47,14 @@ Parse.Cloud.define('getSynonym', function (request, response) {
 
 
 ///////////////////////////
-function getReplyMsg(request, response, msgFromUser) {
+function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   if (msgFromUser != '' || msgFromUser != null) {
     var SYN = Parse.Object.extend("Synonym");
-    var query = new Parse.Query(SYN);
-    query.find({
+    var query1 = new Parse.Query(SYN);
+    query1.find({
       success: function (result) {
         var common_word = "";
         var synonym_word = "";
