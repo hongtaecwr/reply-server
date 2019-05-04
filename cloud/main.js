@@ -47,7 +47,7 @@ Parse.Cloud.define('getSynonym', function (request, response) {
 
 
 ///////////////////////////
-function getReplyMsg(request, response) {
+function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
