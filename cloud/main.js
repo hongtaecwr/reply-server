@@ -39,7 +39,7 @@ function getReplyMsg(request, response) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   
- /*  if (msgFromUser != '' || msgFromUser != null) {
+ /*   if (msgFromUser != '' || msgFromUser != null) {
     msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
   }
   console.log("Before Replace : " + request.params["msg"]);
