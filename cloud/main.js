@@ -63,7 +63,7 @@ function getReplyMsg(request, response) {
           common_word = result[i].get("common_word");
           synonym_word = result[i].get("synonym_word");
         }
-        return str;
+        return common_word, synonym_word;
       }
     });
     msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
