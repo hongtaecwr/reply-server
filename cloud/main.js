@@ -51,7 +51,7 @@ function getReplyMsg(request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  if (msgFromUser != '' || msgFromUser != null) {
+ /*  if (msgFromUser != '' || msgFromUser != null) {
     var SYN = Parse.Object.extend("Synonym");
     var query1 = new Parse.Query(SYN);
     query1.find({
@@ -66,7 +66,7 @@ function getReplyMsg(request, response) {
         response.success();
       }
     });
-  }
+  } */
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
 
