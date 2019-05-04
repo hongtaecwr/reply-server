@@ -61,12 +61,14 @@ function getReplyMsg(request, response) {
         for (var i = 0; i < result.length; i++) {
           common_word = result[i].get("common_word");
           synonym_word = result[i].get("synonym_word");
-          msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
+          msgFromUser2 = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
         }
-        return msgFromUser;
+        return msgFromUser2;
       }
     });
   }
+  var msgFromUser = msgFromUser2;
+
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
 
