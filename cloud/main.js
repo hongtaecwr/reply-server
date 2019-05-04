@@ -55,7 +55,7 @@ function getReplyMsg(request, response) {
     var SYN = Parse.Object.extend("Synonym");
     var query1 = new Parse.Query(SYN);
     query1.find({
-      success: function (result) {
+      success: function a(result) {
         var common_word = "";
         var synonym_word = "";
         for (var i = 0; i < result.length; i++) {
@@ -63,7 +63,7 @@ function getReplyMsg(request, response) {
           synonym_word = result[i].get("synonym_word");
           msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
         }
-        return msgFromUser;
+        return a;
       }
     });
   }
