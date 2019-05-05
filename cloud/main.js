@@ -49,10 +49,9 @@ function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  var getSynonym = new getSynonym();
   if (msgFromUser != '' || msgFromUser != null) {
     getSynonym(msgFromUser,function(){
-      console.log("Test : " + msgFromUser);
+ 
       });
     
   }
@@ -345,7 +344,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-function getSynonym (request, response,callback) {
+function getSynonym (request, response) {
   var strtest = ("ฉันรู้สึกคันตีนมาก ตีนฉันเป็นอะไรกันนะ หรือว่าจะไม่สบาย")
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
