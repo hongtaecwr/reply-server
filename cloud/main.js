@@ -52,18 +52,22 @@ function getReplyMsg(request, response, msgFromUser) {
   if (msgFromUser != '' || msgFromUser != null) {
     var SYN = Parse.Object.extend("Synonym");
     var query = new Parse.Query(SYN);
-    query.find(
-      function test(result) {
+    query.find({
+      success: function (result) {
         var common_word = "";
         var synonym_word = "";
         for (var i = 0; i < result.length; i++) {
           common_word = result[i].get("common_word");
           synonym_word = result[i].get("synonym_word");
-          msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'),synonym_word);
-          return msgFromUser;
+          strtest = strtest.replace(new RegExp(common_word, 'g'),synonym_word);
         }
+        console.log(strtest);
+          response.success(strtest); 
+      },
+      error: function () {
+        response.error("failed");
       }
-    );
+    });
     console.log(msgFromUser);
   }
   console.log("Before Replace : " + request.params["msg"]);
