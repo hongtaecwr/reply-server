@@ -49,9 +49,9 @@ function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-/*   if (msgFromUser != '' || msgFromUser != null) {
-    
-  } */
+  if (msgFromUser != '' || msgFromUser != null) {
+     
+  }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
    
@@ -103,6 +103,8 @@ function getReplyMsg(request, response, msgFromUser) {
     });
   }
 }
+////////////////////////////
+getReplyMsg(msgFromUser);
 ////////////////////////////
 Parse.Cloud.define('botTraining', function (request, response) {
   var MSG = Parse.Object.extend("Message");
@@ -355,7 +357,7 @@ function getSynonym (request, response) {
         strtest = strtest.replace(new RegExp(common_word, 'g'),synonym_word);
       }
       console.log(strtest);
-        response.success(strtest); 
+      response.success(strtest); 
     },
     error: function () {
       response.error("failed");
