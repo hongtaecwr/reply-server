@@ -51,7 +51,7 @@ function getReplyMsg(request, response, msgFromUser) {
   var msgFromUser = request.params.msg;
   var getSynonym = new getSynonym();
   if (msgFromUser != '' || msgFromUser != null) {
-    getsynonym(msgFromUser,function(){
+    getSynonym(msgFromUser,function(){
       console.log("Test : " + msgFromUser);
       });
     
