@@ -61,6 +61,7 @@ function getReplyMsg(request, response, msgFromUser) {
           synonym_word = result[i].get("synonym_word");
           msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'),synonym_word);
         }
+        console.log(msgFromUser);
           response.success(msgFromUser); 
       },
       error: function () {
