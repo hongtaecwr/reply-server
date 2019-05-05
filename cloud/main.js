@@ -49,7 +49,7 @@ function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  
+  var getSynonym = new getSynonym();
   if (msgFromUser != '' || msgFromUser != null) {
     getsynonym(msgFromUser,function(){
       console.log("Test : " + msgFromUser);
