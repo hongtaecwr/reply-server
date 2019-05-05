@@ -50,6 +50,20 @@ function getReplyMsg(request, response, msgFromUser) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   if (msgFromUser != '' || msgFromUser != null) {
+    var SYN = Parse.Object.extend("Synonym");
+    var query = new Parse.Query(SYN);
+    query.find(
+      function (result) {
+        var common_word = "";
+        var synonym_word = "";
+        for (var i = 0; i < result.length; i++) {
+          common_word = result[i].get("common_word");
+          synonym_word = result[i].get("synonym_word");
+          msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'),synonym_word);
+          return msgFromUser;
+        }
+      }
+    );
     console.log(msgFromUser);
   }
   console.log("Before Replace : " + request.params["msg"]);
