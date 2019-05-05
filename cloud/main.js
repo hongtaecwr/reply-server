@@ -358,7 +358,7 @@ function getSynonym (request, response,callback) {
         synonym_word = result[i].get("synonym_word");
         strtest = strtest.replace(new RegExp(common_word, 'g'),synonym_word);
       }
-      callback(response.result);
+      callback(response.strtest);
       console.log(strtest);
         response.success(strtest); 
     },
