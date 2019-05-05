@@ -103,8 +103,7 @@ function getReplyMsg(request, response, msgFromUser) {
     });
   }
 }
-////////////////////////////
-getReplyMsg(msgFromUser);
+
 ////////////////////////////
 Parse.Cloud.define('botTraining', function (request, response) {
   var MSG = Parse.Object.extend("Message");
