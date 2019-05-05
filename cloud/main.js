@@ -32,6 +32,17 @@ Parse.Cloud.define('getReplyMsg', function (request, response) {
     }
   });
 });
+///////////////////////////
+Parse.Cloud.define('getSynonym', function (request, response) {
+  getSynonym(request, {
+    success: function (result) {
+      response.success(result);
+    },
+    error: function (error) {
+      response.error(error);
+    }
+  });
+});
 
 ///////////////////////////
 function getReplyMsg(request, response) {
@@ -39,12 +50,13 @@ function getReplyMsg(request, response) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   
- /*   if (msgFromUser != '' || msgFromUser != null) {
+  if (msgFromUser != '' || msgFromUser != null) {
+
     msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
-   */
+   
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
@@ -331,7 +343,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-Parse.Cloud.define('getSynonym', function (request, response) {
+function getSynonym (request, response) {
   var strtest = ("ฉันรู้สึกคันตีนมาก ตีนฉันเป็นอะไรกันนะ หรือว่าจะไม่สบาย")
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
@@ -352,6 +364,6 @@ Parse.Cloud.define('getSynonym', function (request, response) {
       response.error("failed");
     }
   });
-});
+};
 
 /////////////////////////
