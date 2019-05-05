@@ -48,14 +48,27 @@ Parse.Cloud.define('getSynonym', function (request, response) {
 function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
-  var msgFromUser = request.params.msg;
-  if (msgFromUser != '' || msgFromUser != null) {
-    getSynonym(msgFromUser,function(){
- 
-      });
-    
-  }
-  console.log("Before Replace : " + request.params["msg"]);
+  var strtest = request.params.msg;
+  if (strtest != '' || strtest != null) {
+    var msgFromUser = strtest;
+    var SYN = Parse.Object.extend("Synonym");
+    var query = new Parse.Query(SYN);
+    query.find({
+      success: function (result) {
+        var common_word = "";
+        var synonym_word = "";
+        for (var i = 0; i < result.length; i++) {
+          common_word = result[i].get("common_word");
+          synonym_word = result[i].get("synonym_word");
+          msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'),synonym_word);
+        }
+        response.success(msgFromUser); 
+      },
+      error: function () {
+        response.error("failed");
+      }
+    });
+  };
   console.log("After Replace : " + msgFromUser);
    
   if (msgFromUser == null) {
