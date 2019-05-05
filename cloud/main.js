@@ -50,7 +50,10 @@ function getReplyMsg(request, response, msgFromUser) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   if (msgFromUser != '' || msgFromUser != null) {
-    console.log(msgFromUser);
+    getSynonym(msgFromUser,function(){
+ 
+      });
+    
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
@@ -354,6 +357,7 @@ function getSynonym (request, response) {
         synonym_word = result[i].get("synonym_word");
         strtest = strtest.replace(new RegExp(common_word, 'g'),synonym_word);
       }
+      callback(response.strtest);
       console.log(strtest);
         response.success(strtest); 
     },
