@@ -53,7 +53,7 @@ function getReplyMsg(request, response, msgFromUser) {
     var SYN = Parse.Object.extend("Synonym");
     var query = new Parse.Query(SYN);
     query.find(
-      function (result) {
+      function test(result) {
         var common_word = "";
         var synonym_word = "";
         for (var i = 0; i < result.length; i++) {
