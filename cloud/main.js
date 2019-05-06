@@ -343,7 +343,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-function getSynonym(request, response) {
+function getSynonym(request) {
   var strtest = request;
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
@@ -357,9 +357,6 @@ function getSynonym(request, response) {
         strtest = strtest.replace(new RegExp(common_word, 'g'), synonym_word);
       }
       return (strtest);
-    },
-    error: function () {
-      response.error("failed");
     }
   });
 };
