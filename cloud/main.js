@@ -51,7 +51,6 @@ function getReplyMsg(request, response, msgFromUser) {
   var msgFromUser = request.params.msg;
   if (msgFromUser != '' || msgFromUser != null) {
     ////  อิอิ
-    getsynonym(msgFromUser);
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
