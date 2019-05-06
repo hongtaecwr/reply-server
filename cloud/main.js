@@ -347,6 +347,7 @@ function getSynonym(request) {
   var strtest = request;
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
+  var result2 = "";
   query.find({
     success: function (result) {
       var common_word = "";
@@ -356,9 +357,16 @@ function getSynonym(request) {
         synonym_word = result[i].get("synonym_word");
         strtest = strtest.replace(new RegExp(common_word, 'g'), synonym_word);
       }
-      return (strtest);
+      result2 = strtest;
     }
+    
   });
+  var checker = setInterval(function(){
+    if(result2 != ''){
+      clearInterval(checker)
+      return result2
+    }
+  }, 500)
 };
 
 /////////////////////////
