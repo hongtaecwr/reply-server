@@ -49,9 +49,8 @@ function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
-  
   if (msgFromUser != '' || msgFromUser != null) {
-
+    ////  อิอิ
     getsynonym(msgFromUser);
   }
   console.log("Before Replace : " + request.params["msg"]);
@@ -105,6 +104,7 @@ function getReplyMsg(request, response, msgFromUser) {
     });
   }
 }
+
 ////////////////////////////
 Parse.Cloud.define('botTraining', function (request, response) {
   var MSG = Parse.Object.extend("Message");
@@ -356,9 +356,8 @@ function getSynonym (request, response) {
         synonym_word = result[i].get("synonym_word");
         strtest = strtest.replace(new RegExp(common_word, 'g'),synonym_word);
       }
-      
       console.log(strtest);
-        response.success(strtest); 
+      response.success(strtest); 
     },
     error: function () {
       response.error("failed");
