@@ -62,7 +62,7 @@ function getReplyMsg(request, response, msgFromUser) {
           msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
         }
        /// response.success(msgFromUser);
-
+       console.log("After Replace : " + msgFromUser);
 
        var wc = wordcut.cut(msgFromUser)
        let arr = wc.split('|');
@@ -112,9 +112,9 @@ function getReplyMsg(request, response, msgFromUser) {
     });
   }
 
-  console.log(response);
+  /* console.log(response);
   console.log("Before Replace : " + request.params["msg"]);
-  console.log("After Replace : " + msgFromUser);
+  console.log("After Replace : " + msgFromUser); */
 
   /* if (msgFromUser == null) {
     response.error("request null values");
