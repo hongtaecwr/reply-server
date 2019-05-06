@@ -54,7 +54,7 @@ function getReplyMsg(request, response, msgFromUser) {
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
-   
+
   if (msgFromUser == null) {
     response.error("request null values");
   } else {
@@ -342,8 +342,8 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 });
 
 ///////////////////////
-function getSynonym (request, response) {
-  var strtest = "อยากกิน คันตีน ปวดหัว";
+function getSynonym(request, response) {
+  var strtest = request;
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
   query.find({
@@ -353,10 +353,9 @@ function getSynonym (request, response) {
       for (var i = 0; i < result.length; i++) {
         common_word = result[i].get("common_word");
         synonym_word = result[i].get("synonym_word");
-        strtest = strtest.replace(new RegExp(common_word, 'g'),synonym_word);
+        strtest = strtest.replace(new RegExp(common_word, 'g'), synonym_word);
       }
-      console.log(strtest);
-      response.success(strtest); 
+      return (strtest);
     },
     error: function () {
       response.error("failed");
