@@ -50,8 +50,8 @@ function getReplyMsg(request, response, msgFromUser) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   if (msgFromUser != '' || msgFromUser != null) {
-    getSynonym(msgFromUser);
-    console.log(getSynonym(msgFromUser));
+    /* getSynonym(msgFromUser); */
+    console.log(getSynonym);
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
