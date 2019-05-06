@@ -61,15 +61,62 @@ function getReplyMsg(request, response, msgFromUser) {
           synonym_word = result[i].get("synonym_word");
           msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
         }
-        response.success(msgFromUser);
+       /// response.success(msgFromUser);
+
+
+       var wc = wordcut.cut(msgFromUser)
+       let arr = wc.split('|');
+       var msgChar = arr.join('.*');
+       query.matches("msg", '.*' + msgChar + '.*');
+       query.limit(appQueryLimit);
+       query.find({
+         success: function (msgResponse) {
+           var contents = [];
+           if (msgResponse.length == 0) {
+             response.success({
+               "msg": msgFromUser,
+               "replyMsg": ""
+             });
+           } else {
+             contents = msgResponse[0].get("replyMsg");
+             ////console.log("msgResponse:" + msgResponse);
+             ////console.log("contents:" + contents);
+             var replyCount = contents.length;
+             //console.log("replyCount:" + replyCount);
+             if (replyCount == 0) {
+               response.success({
+                 "msg": msgFromUser,
+                 "replyMsg": ""
+               });
+               //console.log("resultReplyMsg:" + "0");
+             } else {
+               var randomIndex = Math.floor((Math.random() * replyCount) + 0);
+               //console.log("randomIndex:" + randomIndex);
+               var resultReplyMsg = contents[randomIndex].toString();
+               response.success({
+                 "msg": msgFromUser,
+                 "replyMsg": resultReplyMsg
+               });
+               //console.log("resultReplyMsg:" + resultReplyMsg);
+             }
+           }
+           //response.success(msgResponse);
+         },
+         error: function () {
+           response.error("get replyMsg failed");
+         }
+       });
+
+       
       }
     });
   }
+
   console.log(response);
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
 
-  if (msgFromUser == null) {
+  /* if (msgFromUser == null) {
     response.error("request null values");
   } else {
     var wc = wordcut.cut(msgFromUser)
@@ -115,7 +162,7 @@ function getReplyMsg(request, response, msgFromUser) {
         response.error("get replyMsg failed");
       }
     });
-  }
+  } */
 }
 
 ////////////////////////////
