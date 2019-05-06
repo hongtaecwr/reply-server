@@ -45,14 +45,14 @@ Parse.Cloud.define('getSynonym', function (request, response) {
 });
 
 ///////////////////////////
-function getReplyMsg(request, response) {
+function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   
   if (msgFromUser != '' || msgFromUser != null) {
 
-    msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
+    getsynonym(msgFromUser);
   }
   console.log("Before Replace : " + request.params["msg"]);
   console.log("After Replace : " + msgFromUser);
@@ -344,7 +344,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
 
 ///////////////////////
 function getSynonym (request, response) {
-  var strtest = ("ฉันรู้สึกคันตีนมาก ตีนฉันเป็นอะไรกันนะ หรือว่าจะไม่สบาย")
+  var strtest = "อยากกิน";
   var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(SYN);
   query.find({
