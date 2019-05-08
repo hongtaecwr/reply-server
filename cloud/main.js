@@ -33,18 +33,6 @@ Parse.Cloud.define('getReplyMsg', function (request, response) {
   });
 });
 ///////////////////////////
-Parse.Cloud.define('getSynonym', function (request, response) {
-  getSynonym(request, {
-    success: function (result) {
-      response.success(result);
-    },
-    error: function (error) {
-      response.error(error);
-    }
-  });
-});
-
-///////////////////////////
 function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
@@ -61,108 +49,47 @@ function getReplyMsg(request, response, msgFromUser) {
           synonym_word = result[i].get("synonym_word");
           msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
         }
-       /// response.success(msgFromUser);
-       console.log("After Replace : " + msgFromUser);
+        console.log("After Synonym : " + msgFromUser);
+        var wc = wordcut.cut(msgFromUser)
+        let arr = wc.split('|');
+        var msgChar = arr.join('.*');
+        query.matches("msg", '.*' + msgChar + '.*');
+        query.limit(appQueryLimit);
+        query.find({
+          success: function (msgResponse) {
+            var contents = [];
+            if (msgResponse.length == 0) {
+              response.success({
+                "msg": msgFromUser,
+                "replyMsg": ""
+              });
+            } else {
+              contents = msgResponse[0].get("replyMsg");
+              var replyCount = contents.length;
+              if (replyCount == 0) {
+                response.success({
+                  "msg": msgFromUser,
+                  "replyMsg": ""
+                });
+              } else {
+                var randomIndex = Math.floor((Math.random() * replyCount) + 0);
+                var resultReplyMsg = contents[randomIndex].toString();
+                response.success({
+                  "msg": msgFromUser,
+                  "replyMsg": resultReplyMsg
+                });
+              }
+            }
+          },
+          error: function () {
+            response.error("get replyMsg failed");
+          }
+        });
 
-       var wc = wordcut.cut(msgFromUser)
-       let arr = wc.split('|');
-       var msgChar = arr.join('.*');
-       query.matches("msg", '.*' + msgChar + '.*');
-       query.limit(appQueryLimit);
-       query.find({
-         success: function (msgResponse) {
-           var contents = [];
-           if (msgResponse.length == 0) {
-             response.success({
-               "msg": msgFromUser,
-               "replyMsg": ""
-             });
-           } else {
-             contents = msgResponse[0].get("replyMsg");
-             ////console.log("msgResponse:" + msgResponse);
-             ////console.log("contents:" + contents);
-             var replyCount = contents.length;
-             //console.log("replyCount:" + replyCount);
-             if (replyCount == 0) {
-               response.success({
-                 "msg": msgFromUser,
-                 "replyMsg": ""
-               });
-               //console.log("resultReplyMsg:" + "0");
-             } else {
-               var randomIndex = Math.floor((Math.random() * replyCount) + 0);
-               //console.log("randomIndex:" + randomIndex);
-               var resultReplyMsg = contents[randomIndex].toString();
-               response.success({
-                 "msg": msgFromUser,
-                 "replyMsg": resultReplyMsg
-               });
-               //console.log("resultReplyMsg:" + resultReplyMsg);
-             }
-           }
-           //response.success(msgResponse);
-         },
-         error: function () {
-           response.error("get replyMsg failed");
-         }
-       });
 
-       
       }
     });
   }
-
-  /* console.log(response);
-  console.log("Before Replace : " + request.params["msg"]);
-  console.log("After Replace : " + msgFromUser); */
-
-  /* if (msgFromUser == null) {
-    response.error("request null values");
-  } else {
-    var wc = wordcut.cut(msgFromUser)
-    let arr = wc.split('|');
-    var msgChar = arr.join('.*');
-
-    query.matches("msg", '.*' + msgChar + '.*');
-    query.limit(appQueryLimit);
-    query.find({
-      success: function (msgResponse) {
-        var contents = [];
-        if (msgResponse.length == 0) {
-          response.success({
-            "msg": msgFromUser,
-            "replyMsg": ""
-          });
-        } else {
-          contents = msgResponse[0].get("replyMsg");
-          ////console.log("msgResponse:" + msgResponse);
-          ////console.log("contents:" + contents);
-          var replyCount = contents.length;
-          //console.log("replyCount:" + replyCount);
-          if (replyCount == 0) {
-            response.success({
-              "msg": msgFromUser,
-              "replyMsg": ""
-            });
-            //console.log("resultReplyMsg:" + "0");
-          } else {
-            var randomIndex = Math.floor((Math.random() * replyCount) + 0);
-            //console.log("randomIndex:" + randomIndex);
-            var resultReplyMsg = contents[randomIndex].toString();
-            response.success({
-              "msg": msgFromUser,
-              "replyMsg": resultReplyMsg
-            });
-            //console.log("resultReplyMsg:" + resultReplyMsg);
-          }
-        }
-        //response.success(msgResponse);
-      },
-      error: function () {
-        response.error("get replyMsg failed");
-      }
-    });
-  } */
 }
 
 ////////////////////////////
@@ -401,32 +328,3 @@ Parse.Cloud.define('addSynonym', function (request, response) {
     });
   } // end else
 });
-
-///////////////////////
-function getSynonym(request) {
-  var strtest = request;
-  var SYN = Parse.Object.extend("Synonym");
-  var query = new Parse.Query(SYN);
-  var result2 = "";
-  query.find({
-    success: function (result) {
-      var common_word = "";
-      var synonym_word = "";
-      for (var i = 0; i < result.length; i++) {
-        common_word = result[i].get("common_word");
-        synonym_word = result[i].get("synonym_word");
-        strtest = strtest.replace(new RegExp(common_word, 'g'), synonym_word);
-      }
-      result2 = strtest;
-    }
-    
-  });
-  var checker = setInterval(function(){
-    if(result2 != ''){
-      clearInterval(checker)
-      return result2
-    }
-  }, 500)
-};
-
-/////////////////////////
