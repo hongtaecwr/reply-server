@@ -266,7 +266,7 @@ Parse.Cloud.define('addSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var CommonwordFromUser = request.params.common_word;
   var SynonymwordFromUser = request.params.synonym_word;
-  console.log(CommonwordFromUser);
+  console.log(request.params.common_word);
   console.log(SynonymwordFromUser);
 
   // end else
