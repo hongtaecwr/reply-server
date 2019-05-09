@@ -272,7 +272,6 @@ Parse.Cloud.define('addSynonym', function (request, response) {
     response.error("request null values");
   } else {
     var query = new Parse.Query(SYN)
-    query.containedIn("common_word", CommonwordFromUser);
     query.find({
       success: function (synResponse) {
         var synOBJ = new SYN();
