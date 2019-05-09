@@ -268,6 +268,29 @@ Parse.Cloud.define('addSynonym', function (request, response) {
   var SynonymwordFromUser = request.params.synonym_word;
   console.log(CommonwordFromUser);
   console.log(SynonymwordFromUser);
-
+  if (CommonwordFromUser == null || SynonymwordFromUser == null) {
+    response.error("request null values");
+  } else {
+    var query = new Parse.Query(SYN)
+    query.containedIn("common_word", CommonwordFromUser);
+    query.find({
+      success: function (synResponse) {
+        var synOBJ = new SYN();
+        synOBJ.set("common_word", CommonwordFromUser);
+        synOBJ.set("synonym_word", SynonymwordFromUser);
+        synOBJ.save(null, {
+          success: function (success) {
+            response.success({
+              "common_word": CommonwordFromUser,
+              "synonym_word": SynonymwordFromUser
+            });
+          },
+          error: function (error) {
+            response.error("save failed : " + error.code);
+          }
+        });
+      }
+    })
+  }
   // end else
 });
