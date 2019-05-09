@@ -291,5 +291,4 @@ Parse.Cloud.define('addSynonym', function (request, response) {
       }
     })
   }
-  // end else
 });
