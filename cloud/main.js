@@ -269,58 +269,24 @@ Parse.Cloud.define('addSynonym', function (request, response) {
   if (CommonwordFromUser == null || SynonymwordFromUser == null) {
     response.error("request null values");
   } else {
-    var query = new Parse.Query(SYN);
-    query.containedIn("common_word", CommonwordFromUser);
-    query.limit(appQueryLimit);
+    var query = new Parse.Query(SYN)
     query.find({
       success: function (synResponse) {
-        var contents = [];
-        if (synResponse.length == 0) {
-          var synOBJ = new SYN();
-          synOBJ.set("common_word", CommonwordFromUser);
-          synOBJ.set("synonym_word", SynonymwordFromUser);
-          synOBJ.save(null, {
-            success: function (success) {
-              response.success({
-                "common_word": CommonwordFromUser,
-                "synonym_word": SynonymwordFromUser
-              });
-            },
-            error: function (error) {
-              response.error("save failed : " + error.code);
-            }
-          });
-        } else {
-          // put another reply
-          var synOBJ = new SYN();
-          synOBJ = synResponse[0];
-          for (var i = 0; i < CommonwordFromUser.length; i++) {
-            var msgChar = CommonwordFromUser[i];
-            var wc = wordcut.cut(msgChar)
-            let arr = wc.split('|');
-            synOBJ.addUnique("synArray", arr);
-            synOBJ.addUnique("common_word", CommonwordFromUser[i]);
+        var synOBJ = new SYN();
+        synOBJ.set("common_word", CommonwordFromUser);
+        synOBJ.set("synonym_word", SynonymwordFromUser);
+        synOBJ.save(null, {
+          success: function (success) {
+            response.success({
+              "common_word": CommonwordFromUser,
+              "synonym_word": SynonymwordFromUser
+            });
+          },
+          error: function (error) {
+            response.error("save failed : " + error.code);
           }
-          for (var i = 0; i < SynonymwordFromUser.length; i++) {
-            synOBJ.addUnique("synonym_word", SynonymwordFromUser[i]);
-          }
-          synOBJ.save(null, {
-            success: function (success) {
-              response.success({
-                "common_word": CommonwordFromUser,
-                "synonym_word": SynonymwordFromUser
-              });
-            },
-            error: function (error) {
-              response.error("save failed : " + error.code);
-            }
-          });
-        }
-        //response.success(msgResponse);
-      },
-      error: function () {
-        response.error("get Synonym failed");
+        });
       }
-    });
-  } // end else
+    })
+  }
 });
