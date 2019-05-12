@@ -93,7 +93,7 @@ function getReplyMsg(request, response, msgFromUser) {
 }
 
 ////////////////////////////
-Parse.Cloud.define('botTraining', function (request, response) {
+Parse.Cloud.define('addSentence', function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var msgFromUser = request.params.msg;
   var replyMsgFromUser = request.params.replyMsg;
@@ -279,10 +279,6 @@ Parse.Cloud.define('addSynonym', function (request, response) {
           var synOBJ = new SYN();
           synOBJ.set("common_word", CommonwordFromUser);
           synOBJ.set("synonym_word", SynonymwordFromUser);
-          var msgChar = CommonwordFromUser.join('');
-          var wc = wordcut.cut(msgChar)
-          let array = wc.split('|');
-          synOBJ.set("synArray", array);
           synOBJ.save(null, {
             success: function (success) {
               response.success({
