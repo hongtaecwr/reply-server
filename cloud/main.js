@@ -230,7 +230,7 @@ Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
               msgArray.push(msg);
             });
           });
-          var matches = similarity(msgFromUser, msgArray);
+          var matches = stringSimilarity.findBestMatch(msgFromUser, msgArray);
           console.log("matches:" + JSON.stringify(matches));
           console.log("best matches:" + JSON.stringify(matches.bestMatch));
           var target = matches.bestMatch.target;
