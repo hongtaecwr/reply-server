@@ -231,10 +231,12 @@ Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
             });
           });
           var matches = stringSimilarity.findBestMatch(msgFromUser, msgArray);
+          var target = matches.bestMatch.target;
+          var ratings = matches.bestMatch.rating;
           console.log("matches:" + JSON.stringify(matches));
           console.log("best matches:" + JSON.stringify(matches.bestMatch));
-          var target = matches.bestMatch.target;
           console.log("result bestMatch target:" + target);
+          console.log("Ratings is " + ratings)
 
           getReplyMsg({
             params: {
