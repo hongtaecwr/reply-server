@@ -50,7 +50,6 @@ function getReplyMsg(request, response, msgFromUser) {
           msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
         }
         console.log("After Synonym : " + msgFromUser);
-        ////////////////ส่วนตอบ
         var wc = wordcut.cut(msgFromUser)
         let arr = wc.split('|');
         var msgChar = arr.join('.*');
@@ -59,9 +58,6 @@ function getReplyMsg(request, response, msgFromUser) {
         query.find({
           success: function (msgResponse) {
             var contents = [];
-            var matches = stringSimilarity.findBestMatch(msgFromUser, contents);
-            console.log("matches:" + JSON.stringify(matches));
-            console.log("best matches:" + JSON.stringify(matches.bestMatch));
             if (msgResponse.length == 0) {
               response.success({
                 "msg": msgFromUser,
@@ -76,9 +72,6 @@ function getReplyMsg(request, response, msgFromUser) {
                   "replyMsg": ""
                 });
               } else {
-                var matches = stringSimilarity.findBestMatch(msgFromUser, contents);
-                console.log("matches:" + JSON.stringify(matches));
-                console.log("best matches:" + JSON.stringify(matches.bestMatch));
                 var randomIndex = Math.floor((Math.random() * replyCount) + 0);
                 var resultReplyMsg = contents[randomIndex].toString();
                 response.success({
@@ -173,6 +166,7 @@ Parse.Cloud.define('createUnknowMsg', function (request, response) {
   var MSG = Parse.Object.extend("UnknownMessage");
   var msgFromUser = request.params.msg;
   var replyMsgFromUser = request.params.replyMsg;
+
   //console.log("msg from user:" + msgFromUser + "\nreplyMsgFromUser:" + replyMsgFromUser);
   if (msgFromUser == null) {
     response.error("request null values");
