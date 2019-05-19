@@ -24,90 +24,99 @@ Parse.Cloud.define('testMsg', function (req, res) {
 ////////////////////////////
 Parse.Cloud.define("FindBestMsg", function (request, response) {
   var MSG = Parse.Object.extend("Message");
+  var STW = Parse.Object.extend("Stopword");
+  var SYN = Parse.Object.extend("Synonym");
   var query = new Parse.Query(MSG);
+  var query2 = new Parse.Query(STW);
+  var query3 = new Parse.Query(SYN);
   var msgFromUser = request.params.msg;
-  if (msgFromUser !='' || msgFromUser != null){
-    msgFromUser = msgFromUser.replace(/ที่/g, '');
-    msgFromUser = msgFromUser.replace(/ซึ่ง/g, '');
-    msgFromUser = msgFromUser.replace(/อัน/g, '');
-    console.log('After Remove Stop word : ' + msgFromUser)
-    if (msgFromUser != '' || msgFromUser != null) {
-      var SYN = Parse.Object.extend("Synonym");
-      var query2 = new Parse.Query(SYN);
-      query2.find({
-        success: function (result) {
-          var common_word = "";
-          var synonym_word = "";
-          for (var i = 0; i < result.length; i++) {
-            common_word = result[i].get("common_word");
-            synonym_word = result[i].get("synonym_word");
-            msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
-          }
-          console.log("Synonym Complete : " + msgFromUser);
-          var wc = wordcut.cut(msgFromUser)
-          let arr = wc.split('|');
-          query.containedIn("wordsArray", arr);
-          query.limit(appQueryLimit);
-          query.find({
-            success: function (msgResponse) {
-              var contents = [];
-              if (msgResponse.length == 0 || msgResponse == null) {
-                response.success({
-                  "msg": msgFromUser,
-                  "replyMsg": ""
-                });
-              } else {
-                var msgArray = [];
-                _.each(msgResponse, function (obj) {
-                  var msgs = obj.get('msg');
-                  _.each(msgs, function (msg) {
-                    msgArray.push(msg);
-                  });
-                });
-                var matches = stringSimilarity.findBestMatch(msgFromUser, msgArray);
-                var target = matches.bestMatch.target;
-                var ratings = matches.bestMatch.rating;
-                console.log("Matches:" + JSON.stringify(matches));
-                console.log("Best matches:" + JSON.stringify(matches.bestMatch));
-                console.log("Result bestMatch target:" + target);
-                console.log("Ratings is " + ratings);
 
-                getReplyMsg({
-                  params: {
-                    msg: target
-                  }
-                }, {
-                    success: function (result) {
-                      //console.log("result:" + JSON.stringify(result));
-                      if(ratings > 0.5){
-                      response.success({
-                        "msg": msgFromUser,
-                        "replyMsg": result.replyMsg
-                      });
-                      }else{
-                        response.success({
-                          "msg": msgFromUser,
-                          "replyMsg": "บอทยังไม่เข้าใจ"
-                        });
-                      }
-                    },
-                    error: function (error) {
-                      response.error(error);
-                    }
-                  });
-              }
-              //response.success(msgResponse);
-            },
-            error: function () {
-              response.error("get replyMsg failed");
-            }
-          });
+  if (msgFromUser != '' || msgFromUser != null) {
+    query2.find({
+      success: function (result) {
+        var stopword = "";
+        for (var i = 0; i < result.length; i++) {
+          stopword = result[i].get("stopword");
+          msgFromUser = msgFromUser.replace(new RegExp(stopword, 'g'), '');
         }
-      })
-    } else {
-      response.error("request null values");
-    }
-  }else{
+        console.log('After Remove Stop word : ' + msgFromUser)
+        if (msgFromUser != '' || msgFromUser != null) { 
+          query3.find({
+            success: function (result) {
+              var common_word = "";
+              var synonym_word = "";
+              for (var i = 0; i < result.length; i++) {
+                common_word = result[i].get("common_word");
+                synonym_word = result[i].get("synonym_word");
+                msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
+              }
+              console.log("Synonym Complete : " + msgFromUser);
+              var wc = wordcut.cut(msgFromUser)
+              let arr = wc.split('|');
+              query.containedIn("wordsArray", arr);
+              query.limit(appQueryLimit);
+              query.find({
+                success: function (msgResponse) {
+                  var contents = [];
+                  if (msgResponse.length == 0 || msgResponse == null) {
+                    response.success({
+                      "msg": msgFromUser,
+                      "replyMsg": ""
+                    });
+                  } else {
+                    var msgArray = [];
+                    _.each(msgResponse, function (obj) {
+                      var msgs = obj.get('msg');
+                      _.each(msgs, function (msg) {
+                        msgArray.push(msg);
+                      });
+                    });
+                    var matches = stringSimilarity.findBestMatch(msgFromUser, msgArray);
+                    var target = matches.bestMatch.target;
+                    var ratings = matches.bestMatch.rating;
+                    console.log("Matches:" + JSON.stringify(matches));
+                    console.log("Best matches:" + JSON.stringify(matches.bestMatch));
+                    console.log("Result bestMatch target:" + target);
+                    console.log("Ratings is " + ratings);
+
+                    getReplyMsg({
+                      params: {
+                        msg: target
+                      }
+                    }, {
+                        success: function (result) {
+                          //console.log("result:" + JSON.stringify(result));
+                          if (ratings > 0.5) {
+                            response.success({
+                              "msg": msgFromUser,
+                              "replyMsg": result.replyMsg
+                            });
+                          } else {
+                            response.success({
+                              "msg": msgFromUser,
+                              "replyMsg": "บอทยังไม่เข้าใจ"
+                            });
+                          }
+                        },
+                        error: function (error) {
+                          response.error(error);
+                        }
+                      });
+                  }
+                  //response.success(msgResponse);
+                },
+                error: function () {
+                  response.error("get replyMsg failed");
+                }
+              });
+            }
+          })
+        } else {
+          response.error("request null values");
+        }
+      }
+    })
+  } else {
     response.error("request null values");
   }
 });
