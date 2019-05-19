@@ -73,10 +73,6 @@ function getReplyMsg(request, response, msgFromUser) {
         response.error("get replyMsg failed");
       }
     });
-
-
-  }
-});
   }
 }
 
