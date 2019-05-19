@@ -12,7 +12,7 @@ console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง
 Parse.Cloud.define('hello', function (req, res) {
   res.success('Hi');
 });
-
+////////////////////////////
 Parse.Cloud.define('testMsg', function (req, res) {
   var msgFromUser = req.params.msg;
   //console.log("msg from user:" + msgFromUser);
@@ -21,19 +21,8 @@ Parse.Cloud.define('testMsg', function (req, res) {
     "replyMsg": "Good"
   });
 });
-
+////////////////////////////
 Parse.Cloud.define('getReplyMsg', function (request, response) {
-  getReplyMsg(request, {
-    success: function (result) {
-      response.success(result);
-    },
-    error: function (error) {
-      response.error(error);
-    }
-  });
-});
-///////////////////////////
-function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
@@ -90,8 +79,7 @@ function getReplyMsg(request, response, msgFromUser) {
       }
     });
   }
-}
-
+});
 ////////////////////////////
 Parse.Cloud.define('botTraining', function (request, response) {
   var MSG = Parse.Object.extend("Message");
