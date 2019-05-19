@@ -12,7 +12,7 @@ console.log(wordcut.cut("ไทยแลนด์ กินข้าวยัง
 Parse.Cloud.define('hello', function (req, res) {
   res.success('Hi');
 });
-////////////////////////////
+
 Parse.Cloud.define('testMsg', function (req, res) {
   var msgFromUser = req.params.msg;
   //console.log("msg from user:" + msgFromUser);
@@ -23,6 +23,16 @@ Parse.Cloud.define('testMsg', function (req, res) {
 });
 ////////////////////////////
 Parse.Cloud.define('getReplyMsg', function (request, response) {
+  getReplyMsg(request, {
+    success: function (result) {
+      response.success(result);
+    },
+    error: function (error) {
+      response.error(error);
+    }
+  });
+});
+function getReplyMsg(request, response, msgFromUser) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
@@ -79,8 +89,113 @@ Parse.Cloud.define('getReplyMsg', function (request, response) {
       }
     });
   }
-});
+}
+
 ////////////////////////////
+Parse.Cloud.define("compareMsg", function (request, response) {
+  var MSG = Parse.Object.extend("Message");
+  var query = new Parse.Query(MSG);
+  var msgFromUser = request.params.msg;
+  if (msgFromUser != '' || msgFromUser != null) {
+    var SYN = Parse.Object.extend("Synonym");
+    var query2 = new Parse.Query(SYN);
+    query2.find({
+      success: function (result) {
+        var common_word = "";
+        var synonym_word = "";
+        for (var i = 0; i < result.length; i++) {
+          common_word = result[i].get("common_word");
+          synonym_word = result[i].get("synonym_word");
+          msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
+        }
+        console.log("After Synonym : " + msgFromUser);
+        var wc = wordcut.cut(msgFromUser)
+        let arr = wc.split('|');
+        query.containedIn("wordsArray", arr);
+        query.limit(appQueryLimit);
+        query.find({
+          success: function (msgResponse) {
+            var contents = [];
+            if (msgResponse.length == 0 || msgResponse == null) {
+              response.success({
+                "msg": msgFromUser,
+                "replyMsg": ""
+              });
+            } else {
+              var msgArray = [];
+              _.each(msgResponse, function (obj) {
+                var msgs = obj.get('msg');
+                _.each(msgs, function (msg) {
+                  msgArray.push(msg);
+                });
+              });
+              var matches = stringSimilarity.findBestMatch(msgFromUser, msgArray);
+              var target = matches.bestMatch.target;
+              var ratings = matches.bestMatch.rating;
+              console.log("matches:" + JSON.stringify(matches));
+              console.log("best matches:" + JSON.stringify(matches.bestMatch));
+              console.log("result bestMatch target:" + target);
+              console.log("Ratings is " + ratings)
+    
+              getReplyMsg({
+                params: {
+                  msg: target
+                }
+              }, {
+                  success: function (result) {
+                    //console.log("result:" + JSON.stringify(result));
+                    response.success({
+                      "msg": msgFromUser,
+                      "replyMsg": result.replyMsg
+                    });
+                  },
+                  error: function (error) {
+                    response.error(error);
+                  }
+                });
+            }
+            //response.success(msgResponse);
+          },
+          error: function () {
+            response.error("get replyMsg failed");
+          }
+        });
+      }
+    })
+  } else {
+    response.error("request null values");
+  }
+});
+//////////////////////
+Parse.Cloud.define('addSynonym', function (request, response) {
+  var SYN = Parse.Object.extend("Synonym");
+  var CommonwordFromUser = request.params.common_word;
+  var SynonymwordFromUser = request.params.synonym_word;
+  if (CommonwordFromUser == null || SynonymwordFromUser == null) {
+    response.error("request null values");
+  } else {
+    var query = new Parse.Query(SYN)
+    query.find({
+      success: function (synResponse) {
+        var synOBJ = new SYN();
+        synOBJ.set("common_word", CommonwordFromUser);
+        synOBJ.set("synonym_word", SynonymwordFromUser);
+        synOBJ.save(null, {
+          success: function (success) {
+            response.success({
+              "common_word": CommonwordFromUser,
+              "synonym_word": SynonymwordFromUser
+            });
+          },
+          error: function (error) {
+            response.error("save failed : " + error.code);
+          }
+        });
+      }
+    })
+  }
+});
+///////////////////////
 Parse.Cloud.define('botTraining', function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var msgFromUser = request.params.msg;
@@ -189,108 +304,4 @@ Parse.Cloud.define('createUnknowMsg', function (request, response) {
     });
   } // end else
 });
-
 /////////////////////////////////////
-Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
-  var MSG = Parse.Object.extend("Message");
-  var query = new Parse.Query(MSG);
-  var msgFromUser = request.params.msg;
-  if (msgFromUser != '' || msgFromUser != null) {
-    var SYN = Parse.Object.extend("Synonym");
-    var query2 = new Parse.Query(SYN);
-    query2.find({
-      success: function (result) {
-        var common_word = "";
-        var synonym_word = "";
-        for (var i = 0; i < result.length; i++) {
-          common_word = result[i].get("common_word");
-          synonym_word = result[i].get("synonym_word");
-          msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
-        }
-        console.log("After Synonym2 : " + msgFromUser);
-        var wc = wordcut.cut(msgFromUser)
-        let arr = wc.split('|');
-        query.containedIn("wordsArray", arr);
-        query.limit(appQueryLimit);
-        query.find({
-          success: function (msgResponse) {
-            var contents = [];
-            if (msgResponse.length == 0 || msgResponse == null) {
-              response.success({
-                "msg": msgFromUser,
-                "replyMsg": ""
-              });
-            } else {
-              var msgArray = [];
-              _.each(msgResponse, function (obj) {
-                var msgs = obj.get('msg');
-                _.each(msgs, function (msg) {
-                  msgArray.push(msg);
-                });
-              });
-              var matches = stringSimilarity.findBestMatch(msgFromUser, msgArray);
-              var target = matches.bestMatch.target;
-              var ratings = matches.bestMatch.rating;
-              console.log("matches:" + JSON.stringify(matches));
-              console.log("best matches:" + JSON.stringify(matches.bestMatch));
-              console.log("result bestMatch target:" + target);
-              console.log("Ratings is " + ratings)
-    
-              getReplyMsg({
-                params: {
-                  msg: target
-                }
-              }, {
-                  success: function (result) {
-                    //console.log("result:" + JSON.stringify(result));
-                    response.success({
-                      "msg": msgFromUser,
-                      "replyMsg": result.replyMsg
-                    });
-                  },
-                  error: function (error) {
-                    response.error(error);
-                  }
-                });
-            }
-            //response.success(msgResponse);
-          },
-          error: function () {
-            response.error("get replyMsg failed");
-          }
-        });
-      }
-    })
-  } else {
-    response.error("request null values");
-  }
-});
-//////////////////////
-Parse.Cloud.define('addSynonym', function (request, response) {
-  var SYN = Parse.Object.extend("Synonym");
-  var CommonwordFromUser = request.params.common_word;
-  var SynonymwordFromUser = request.params.synonym_word;
-  if (CommonwordFromUser == null || SynonymwordFromUser == null) {
-    response.error("request null values");
-  } else {
-    var query = new Parse.Query(SYN)
-    query.find({
-      success: function (synResponse) {
-        var synOBJ = new SYN();
-        synOBJ.set("common_word", CommonwordFromUser);
-        synOBJ.set("synonym_word", SynonymwordFromUser);
-        synOBJ.save(null, {
-          success: function (success) {
-            response.success({
-              "common_word": CommonwordFromUser,
-              "synonym_word": SynonymwordFromUser
-            });
-          },
-          error: function (error) {
-            response.error("save failed : " + error.code);
-          }
-        });
-      }
-    })
-  }
-});
