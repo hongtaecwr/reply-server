@@ -207,7 +207,7 @@ Parse.Cloud.define("findBestMsgFromUnknow", function (request, response) {
           synonym_word = result[i].get("synonym_word");
           msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
         }
-        console.log("After Synonym : " + msgFromUser);
+        console.log("After Synonym2 : " + msgFromUser);
         var wc = wordcut.cut(msgFromUser)
         let arr = wc.split('|');
         query.containedIn("wordsArray", arr);
