@@ -92,7 +92,7 @@ function getReplyMsg(request, response, msgFromUser) {
 }
 
 ////////////////////////////
-Parse.Cloud.define("compareMsg", function (request, response) {
+Parse.Cloud.define("FindBestMsg", function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
