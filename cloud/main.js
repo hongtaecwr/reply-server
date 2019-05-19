@@ -30,7 +30,7 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
     msgFromUser = msgFromUser.replace(/ที่/g, '');
     msgFromUser = msgFromUser.replace(/ซึ่ง/g, '');
     msgFromUser = msgFromUser.replace(/อัน/g, '');
-    console.log
+    console.log('After Remove Stop word : ' + msgFromUser)
     if (msgFromUser != '' || msgFromUser != null) {
       var SYN = Parse.Object.extend("Synonym");
       var query2 = new Parse.Query(SYN);
