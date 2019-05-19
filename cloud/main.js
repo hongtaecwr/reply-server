@@ -86,7 +86,7 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
                     }, {
                         success: function (result) {
                           //console.log("result:" + JSON.stringify(result));
-                          if (ratings > 0.5) {
+                          if (ratings > 0.4) {
                             response.success({
                               "msg": msgFromUser,
                               "replyMsg": result.replyMsg
@@ -94,7 +94,7 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
                           } else {
                             response.success({
                               "msg": msgFromUser,
-                              "replyMsg": "บอทยังไม่เข้าใจ"
+                              "replyMsg": "บอทยังไม่เข้าใจสิ่งที่คุณพูด กรุณาตรวจสอบประโยคอีกครั้ง หรือบอทอาจจะยังไม่มีคำตอบในระบบ"
                             });
                           }
                         },
