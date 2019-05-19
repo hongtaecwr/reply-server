@@ -27,9 +27,9 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   if (msgFromUser !='' || msgFromUser != null){
-    messageData = messageData.replace(/ที่/g, '');
-    messageData = messageData.replace(/ซึ่ง/g, '');
-    messageData = messageData.replace(/อัน/g, '');
+    msgFromUser = msgFromUser.replace(/ที่/g, '');
+    msgFromUser = msgFromUser.replace(/ซึ่ง/g, '');
+    msgFromUser = msgFromUser.replace(/อัน/g, '');
     console.log
     if (msgFromUser != '' || msgFromUser != null) {
       var SYN = Parse.Object.extend("Synonym");
