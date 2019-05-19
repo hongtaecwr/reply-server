@@ -120,7 +120,7 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
               console.log("matches:" + JSON.stringify(matches));
               console.log("best matches:" + JSON.stringify(matches.bestMatch));
               console.log("result bestMatch target:" + target);
-              console.log("Ratings is " + ratings)
+              console.log("Ratings is " + ratings);
 
               getReplyMsg({
                 params: {
