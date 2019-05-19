@@ -129,10 +129,17 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
               }, {
                   success: function (result) {
                     //console.log("result:" + JSON.stringify(result));
+                    if(ratings > 0.5){
                     response.success({
                       "msg": msgFromUser,
                       "replyMsg": result.replyMsg
                     });
+                    }else{
+                      response.success({
+                        "msg": msgFromUser,
+                        "replyMsg": "บอทยังไม่เข้าใจ"
+                      });
+                    }
                   },
                   error: function (error) {
                     response.error(error);
