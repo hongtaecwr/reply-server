@@ -136,7 +136,7 @@ function getReplyMsg(request, response, msgFromUser) {
   var query = new Parse.Query(MSG);
   var msgFromUser = request.params.msg;
   if (msgFromUser != '' || msgFromUser != null) {
-    console.log("After Similarity : " + msgFromUser);
+    console.log("Best rating form FindBestMsg : " + msgFromUser);
     var wc = wordcut.cut(msgFromUser)
     let arr = wc.split('|');
     var msgChar = arr.join('.*');
