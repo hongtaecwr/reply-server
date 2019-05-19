@@ -22,60 +22,6 @@ Parse.Cloud.define('testMsg', function (req, res) {
   });
 });
 ////////////////////////////
-Parse.Cloud.define('getReplyMsg', function (request, response) {
-  getReplyMsg(request, {
-    success: function (result) {
-      response.success(result);
-    },
-    error: function (error) {
-      response.error(error);
-    }
-  });
-});
-function getReplyMsg(request, response, msgFromUser) {
-  var MSG = Parse.Object.extend("Message");
-  var query = new Parse.Query(MSG);
-  var msgFromUser = request.params.msg;
-  if (msgFromUser != '' || msgFromUser != null) {
-    console.log("After Similarity : " + msgFromUser);
-    var wc = wordcut.cut(msgFromUser)
-    let arr = wc.split('|');
-    var msgChar = arr.join('.*');
-    query.matches("msg", '.*' + msgChar + '.*');
-    query.limit(appQueryLimit);
-    query.find({
-      success: function (msgResponse) {
-        var contents = [];
-        if (msgResponse.length == 0) {
-          response.success({
-            "msg": msgFromUser,
-            "replyMsg": ""
-          });
-        } else {
-          contents = msgResponse[0].get("replyMsg");
-          var replyCount = contents.length;
-          if (replyCount == 0) {
-            response.success({
-              "msg": msgFromUser,
-              "replyMsg": ""
-            });
-          } else {
-            var randomIndex = Math.floor((Math.random() * replyCount) + 0);
-            var resultReplyMsg = contents[randomIndex].toString();
-            response.success({
-              "msg": msgFromUser,
-              "replyMsg": resultReplyMsg
-            });
-          }
-        }
-      },
-      error: function () {
-        response.error("get replyMsg failed");
-      }
-    });
-  }
-}
-////////////////////////////
 Parse.Cloud.define("FindBestMsg", function (request, response) {
   var MSG = Parse.Object.extend("Message");
   var query = new Parse.Query(MSG);
@@ -157,7 +103,61 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
     response.error("request null values");
   }
 });
-//////////////////////
+////////////////////////////
+Parse.Cloud.define('getReplyMsg', function (request, response) {
+  getReplyMsg(request, {
+    success: function (result) {
+      response.success(result);
+    },
+    error: function (error) {
+      response.error(error);
+    }
+  });
+});
+function getReplyMsg(request, response, msgFromUser) {
+  var MSG = Parse.Object.extend("Message");
+  var query = new Parse.Query(MSG);
+  var msgFromUser = request.params.msg;
+  if (msgFromUser != '' || msgFromUser != null) {
+    console.log("After Similarity : " + msgFromUser);
+    var wc = wordcut.cut(msgFromUser)
+    let arr = wc.split('|');
+    var msgChar = arr.join('.*');
+    query.matches("msg", '.*' + msgChar + '.*');
+    query.limit(appQueryLimit);
+    query.find({
+      success: function (msgResponse) {
+        var contents = [];
+        if (msgResponse.length == 0) {
+          response.success({
+            "msg": msgFromUser,
+            "replyMsg": ""
+          });
+        } else {
+          contents = msgResponse[0].get("replyMsg");
+          var replyCount = contents.length;
+          if (replyCount == 0) {
+            response.success({
+              "msg": msgFromUser,
+              "replyMsg": ""
+            });
+          } else {
+            var randomIndex = Math.floor((Math.random() * replyCount) + 0);
+            var resultReplyMsg = contents[randomIndex].toString();
+            response.success({
+              "msg": msgFromUser,
+              "replyMsg": resultReplyMsg
+            });
+          }
+        }
+      },
+      error: function () {
+        response.error("get replyMsg failed");
+      }
+    });
+  }
+}
+////////////////////////////
 Parse.Cloud.define('addSynonym', function (request, response) {
   var SYN = Parse.Object.extend("Synonym");
   var CommonwordFromUser = request.params.common_word;
