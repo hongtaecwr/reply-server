@@ -75,7 +75,6 @@ function getReplyMsg(request, response, msgFromUser) {
     });
   }
 }
-
 ////////////////////////////
 Parse.Cloud.define("FindBestMsg", function (request, response) {
   var MSG = Parse.Object.extend("Message");
@@ -93,7 +92,7 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
           synonym_word = result[i].get("synonym_word");
           msgFromUser = msgFromUser.replace(new RegExp(common_word, 'g'), synonym_word);
         }
-        console.log("After Synonym FindBestMsg : " + msgFromUser);
+        console.log("Synonym Complete : " + msgFromUser);
         var wc = wordcut.cut(msgFromUser)
         let arr = wc.split('|');
         query.containedIn("wordsArray", arr);
@@ -117,9 +116,9 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
               var matches = stringSimilarity.findBestMatch(msgFromUser, msgArray);
               var target = matches.bestMatch.target;
               var ratings = matches.bestMatch.rating;
-              console.log("matches:" + JSON.stringify(matches));
-              console.log("best matches:" + JSON.stringify(matches.bestMatch));
-              console.log("result bestMatch target:" + target);
+              console.log("Matches:" + JSON.stringify(matches));
+              console.log("Best matches:" + JSON.stringify(matches.bestMatch));
+              console.log("Result bestMatch target:" + target);
               console.log("Ratings is " + ratings);
 
               getReplyMsg({
