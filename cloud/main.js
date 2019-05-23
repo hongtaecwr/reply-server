@@ -53,6 +53,7 @@ Parse.Cloud.define("FindBestMsg", function (request, response) {
               console.log("Synonym Complete : " + msgFromUser);
               var wc = wordcut.cut(msgFromUser)
               let arr = wc.split('|');
+              console.log(arr);
               query.containedIn("wordsArray", arr);
               query.limit(appQueryLimit);
               query.find({
