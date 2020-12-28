@@ -14,7 +14,7 @@
     "mongodb": "^3.1.9",
     "parse": "^2.1.0",
     "parse-dashboard": "^1.2.0",
-    "parse-server": "^2.8.4",
+    "parse-server": "^4.5.0",
     "regex": "^0.1.1",
     "string-cosine-similarity": "^2.0.0",
     "string-similarity": "^2.0.0",
